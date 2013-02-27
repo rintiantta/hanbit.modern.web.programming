@@ -1,23 +1,25 @@
 #HTML5 Programming Example
 
-`¸ð´ø À¥À» À§ÇÑ HTML5 ÇÁ·Î±×·¡¹Ö¡ºÇÑºû¹Ìµð¾î, 2013¡»`¿¡ »ç¿ëµÈ ¿¹Á¦ÀÔ´Ï´Ù.
-±×³É À§¿¡ zip ÆÄÀÏ ´­·¯¼­ ´Ù¿î ¹ÞÀ¸¸é µË´Ï´Ù.
+`ëª¨ë˜ ì›¹ì„ ìœ„í•œ HTML5 í”„ë¡œê·¸ëž˜ë°ã€Ží•œë¹›ë¯¸ë””ì–´, 2013ã€`ì— ì‚¬ìš©ëœ ì˜ˆì œìž…ë‹ˆë‹¤.
+ê·¸ëƒ¥ ìœ„ì— zip íŒŒì¼ ëˆŒëŸ¬ì„œ ë‹¤ìš´ ë°›ìœ¼ë©´ ë©ë‹ˆë‹¤.
 
-Áú¹®Àº issues¿¡ ±ÛÀ» ³²°ÜÁÖ½Ã¸é µË´Ï´Ù.
-¸ðµÎ ÇÔ²² ´äº¯À» ÇØÁÖ¼¼¿ä!
-¿ì¸® ÇÔ²² ¸¸µé¾î°¡´Â ÁÁÀº ´ëÇÑ¹Î±¹ °³¹ß ¼¼»ó "¤±" ....
+ì§ˆë¬¸ì€ issuesì— ê¸€ì„ ë‚¨ê²¨ì£¼ì‹œë©´ ë©ë‹ˆë‹¤.
+ëª¨ë‘ í•¨ê»˜ ë‹µë³€ì„ í•´ì£¼ì„¸ìš”!
+ìš°ë¦¬ í•¨ê»˜ ë§Œë“¤ì–´ê°€ëŠ” ì¢‹ì€ ëŒ€í•œë¯¼êµ­ ê°œë°œ ì„¸ìƒ "ã…" ....
 
-#¿ÀÅ»ÀÚ
-72ÆäÀÌÁö
+#ì˜¤íƒˆìž
+72íŽ˜ì´ì§€
 ```javascript
-// Àß¸øµÈ ³»¿ë
+// ìž˜ëª»ëœ ë‚´ìš©
 rint.forEach(function (index, item) {
-    // »ý·«
+    // ìƒëžµ
 });
 ```
 ```javascript
-// ±³Á¤
+// êµì •
 rint.iterate(function (index, item) {
-    // »ý·«
+    // ìƒëžµ
 });
 ```
+
+#ì°¸ê³ ì‚¬í•­
