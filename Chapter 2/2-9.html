@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 2</title>
+</head>
+<body>
+    <textarea id="textarea"></textarea>
+    <script>
+        // 이벤트를 연결합니다.
+        document.getElementById('textarea').onkeypress = function (event) {
+            setTimeout(function () {
+                // 출력합니다.
+                alert(this);
+            }, 0);
+        };
+    </script>
+</body>
+</html>

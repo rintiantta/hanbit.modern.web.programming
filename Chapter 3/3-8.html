@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Request Animation Basic</title>
+    <style>
+        body { overflow: hidden; }
+    </style>
+    <script src="prefix.js"></script>
+    <!-- 설정 -->
+    <script>
+        removePrefix(window, 'requestAnimationFrame');
+        removePrefix(window, 'cancelAnimationFrame');
+    </script>
+    <script>
+        function AnimationObject(options) {
+            this.body = document.createElement('h1');
+            this.body.textContent = '★';
+            this.body.style.position = 'absolute';
+            this.x = options.x || 0;
+            this.y = options.y || 0;
+            this.vx = options.vx || 0;
+            this.vy = options.vy || 0;
+        }
+
+        AnimationObject.prototype.appendTo = function (domElement) {
+            domElement.appendChild(this.body);
+            return this;
+        };
+
+        AnimationObject.prototype.update = function () {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            if (this.x < 0 || width < this.x) {
+                this.vx *= -1;
+            }
+            if (this.y < 0 || height < this.y) {
+                this.vy *= -1;
+            }
+
+            this.body.style.left = this.x + 'px';
+            this.body.style.top = this.y + 'px';
+        };
+    </script>
+    <script>
+        window.addEventListener('load', function () {
+            // 화면 크기를 구합니다.
+            width = window.innerWidth;
+            height = window.innerHeight;
+
+            // 변수를 선언합니다.
+            var objects = [];
+            for (var i = 0; i < 100; i++) {
+                objects.push(new AnimationObject({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: Math.random() * 10 - 5,
+                    vy: Math.random() * 10 - 5
+                }).appendTo(document.body));
+            }
+
+            // animate() 함수 선언
+            var animate = function () {
+                // 애니메이션 본문
+                objects.forEach(function (item) {
+                    item.update();
+                });
+
+                // 재귀 요청
+                requestAnimationFrame(animate);
+            };
+
+            // animate() 함수 실행
+            requestAnimationFrame(animate);
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

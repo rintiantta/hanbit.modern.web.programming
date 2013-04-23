@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Sammy.js Basic</title>
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="sammy.js"></script>
+    <!-- 페이지 라우트 -->
+    <script>
+        var app = Sammy(function () {
+            this.get('#/form', function () {
+                // 템플릿을 추출합니다.
+                var template = $('#form').text();
+
+                // 화면에 반영합니다.
+                $('body').html(template);
+            });
+
+            this.get('#/result', function () {
+                // 요청 매개 변수를 추출합니다.
+                var name = this.params['name'];
+
+                // 화면에 반영합니다.
+                $('body').empty();
+                $('<h1></h1>').text(name).appendTo('body');
+
+                // 5초 후에 뒤로 이동합니다.
+                setTimeout(function () {
+                    history.back();
+                }, 5 * 1000);
+            });
+        });
+    </script>
+    <!-- 페이지 준비 완료 -->
+    <script>
+        $(document).ready(function () {
+            app.run('#/form');
+        });
+    </script>
+    <!-- form 템플릿 -->
+    <script id="form" type="text/html">
+        <form action="#/result" method="get">
+            <label>Name</label>
+            <input type="text" name="name" />
+            <input type="submit" />
+        </form>
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 2</title>
+    <script>
+        Object.defineProperties(Object.prototype, {
+            iterate: {
+                value: function (callback) {
+                    for (var key in this) {
+                        callback(key, this[key], this);
+                    }
+                }
+            }
+        });
+
+        ({
+            name: 'rint',
+            hobby: ['Guitar', 'Piano']
+        }).iterate(function (key, item) {
+            console.log(key, item);
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

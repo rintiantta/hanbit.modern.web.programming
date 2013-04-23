@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Request Animation Basic</title>
+    <script src="prefix.js"></script>
+    <!-- 설정 -->
+    <script>
+        removePrefix(window, 'requestAnimationFrame');
+        removePrefix(window, 'cancelAnimationFrame');
+    </script>
+    <script>
+        // animate() 함수 선언
+        var animate = function () {
+            // 애니메이션 본문
+            /* 코드 */
+
+            // 재귀 요청
+            requestAnimationFrame(animate);
+        };
+
+        // animate() 함수 실행
+        requestAnimationFrame(animate);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

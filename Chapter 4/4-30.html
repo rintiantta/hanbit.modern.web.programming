@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Push State</title>
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 변수를 선언합니다.
+            var count = 1;
+
+            // 이벤트를 연결합니다.
+            $('button').click(function () {
+                // 출력합니다.
+                $('h1').text('Count - ' + count);
+
+                // 상태를 저장합니다.
+                history.pushState({
+                    data: count
+                }, 'Push State', '#' + count);
+
+                // 변수를 증가시킵니다.
+                count = count + 1;
+            });
+        });
+
+        $(window).on('popstate', function (event) {
+            if (event.originalEvent.state) {
+                $('h1').text('Count - ' + event.originalEvent.state.data);
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Count - 0</h1>
+    <button>Click</button>
+</body>
+</html>

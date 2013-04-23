@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 2</title>
+    <script>
+        Object.prototype.iterate = function (callback) {
+            for (var key in this) {
+                callback(key, this[key], this);
+            }
+        };
+    </script>
+</head>
+<body>
+
+</body>
+</html>

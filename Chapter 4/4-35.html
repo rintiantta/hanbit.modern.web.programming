@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Tweeter Search</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script>
+        // 이벤트를 연결합니다.
+        $(window).on('popstate', function (event) {
+            // 화면에서 기존 데이터를 제거합니다.
+            $('#content').empty();
+
+            // 화면에 반영합니다.
+            if (event.originalEvent.state) {
+                // 요소를 생성합니다.
+                event.originalEvent.state.results.forEach(function (item) {
+                    // 변수를 선언합니다.
+                    var output = '';
+                    output += '<h4>' + item.from_user + '</h4>';
+                    output += '<p>' + item.text + '</p>';
+                    output += '<hr />';
+
+                    // 화면에 반영합니다.
+                    $('#content').append(output);
+                });
+            }
+        });
+
+        // 애플리케이션을 실행합니다.
+        $(document).ready(function () {
+            $('form').submit(function (event) {
+                // 변수를 선언합니다.
+                var keyword = $('input[type="text"]').val();
+
+                // 입력 양식의 내용을 제거합니다.
+                $('input[type="text"]').val('');
+
+                // Ajax 요청을 수행합니다.
+                $.ajax('http://search.twitter.com/search.json?q=' + keyword + '&callback=?', {
+                    dataType: 'JSONP',
+                    success: function (data) {
+                        // 화면에서 기존 데이터를 제거합니다.
+                        $('#content').empty();
+
+                        // 요소를 생성합니다.
+                        data.results.forEach(function (item) {
+                            // 변수를 선언합니다.
+                            var output = '';
+                            output += '<h4>' + item.from_user + '</h4>';
+                            output += '<p>' + item.text + '</p>';
+                            output += '<hr />';
+
+                            // 화면에 반영합니다.
+                            $('#content').append(output);
+                        });
+
+                        // 상태를 저장합니다.
+                        history.pushState(data, 'Search - ' + keyword, '#/search?keyword=' + keyword);
+                    }
+                });
+
+                // 기본 이벤트를 제거합니다.
+                event.preventDefault();
+            });
+        });
+    </script>
+</head>
+<body class="container">
+    <header>
+        <h1>Tweeter Search</h1>
+        <form action="#/search" method="get" class="form-inline">
+            <input name="keyword" type="text" />
+            <input type="submit" value="Search" class="btn" />
+        </form>
+    </header>
+    <hr />
+    <section id="content">
+
+    </section>
+</body>
+</html>

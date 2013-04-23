@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>History Basic</title>
+    <script>
+        // 변경 이벤트
+        function hashChange() {
+            console.log(location.hash);
+        }
+
+        // 1초에 10번 해시가 변경되는지 검사합니다.
+        var beforeURL = location.hash;
+        setInterval(function () {
+            if (beforeURL != location.hash) {
+                hashChange();
+            }
+            beforeURL = location.hash;
+        }, 1000 / 10);
+    </script>
+</head>
+<body>
+    <a href="#/">Page_Index</a>
+    <a href="#/page_a">Page_A</a>
+    <a href="#/page_b">Page_B</a>
+</body>
+</html>

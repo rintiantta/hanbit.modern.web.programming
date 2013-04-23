@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Sammy.js Basic</title>
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="sammy.js"></script>
+    <!-- 페이지 라우트 -->
+    <script>
+        var app = Sammy(function () {
+            this.get('#/white', function () { });
+            this.get('#/red', function () { });
+        });
+    </script>
+    <!-- 페이지 준비 완료 -->
+    <script>
+
+    </script>
+</head>
+<body>
+    <a href="#/white">WHITE</a>
+    <a href="#/red">RED</a>
+</body>
+</html>

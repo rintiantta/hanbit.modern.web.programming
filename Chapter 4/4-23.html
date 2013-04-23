@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Hash Change</title>
+    <!-- 모듈 구현 -->
+    <script>
+        (function () {
+            // 변수를 선언합니다.
+            var router = {};
+
+            // 메서드를 추가합니다.
+            location.get = function (url, callback) {
+                // router 객체에 콜백 함수를 추가합니다.
+                if (router[url]) {
+                    router[url].push(callback);
+                } else {
+                    router[url] = [callback];
+                }
+
+                // 리턴합니다.
+                return location;
+            };
+
+            // 이벤트를 연결합니다.
+            window.addEventListener('hashchange', function () {
+                if (router[location.hash]) {
+                    router[location.hash].forEach(function (item) {
+                        item();
+                    });
+                }
+            });
+        })();
+    </script>
+    <!-- 진행 코드 -->
+    <script>
+
+    </script>
+</head>
+<body>
+    <a href="#/">white</a>
+    <a href="#/red">red</a>
+    <a href="#/green">green</a>
+    <a href="#/blue">blue</a>
+</body>
+</html>

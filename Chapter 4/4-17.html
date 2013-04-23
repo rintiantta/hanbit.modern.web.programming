@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>JSONP Example</title>
+    <script>
+        // 함수를 생성합니다.
+        var test = function (data) { alert(data); };
+
+        // script 태그를 생성합니다.
+        var script = document.createElement('script');
+        script.src = 'http://search.twitter.com/search.json?q=html5&callback=test';
+
+        // head 태그에 script 태그를 추가합니다.
+        document.head.appendChild(script);
+    </script>
+</head>
+<body>
+
+</body>
+</html>
