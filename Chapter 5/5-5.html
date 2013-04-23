@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 5</title>
+    <script>
+        // 함수를 선언합니다.
+        function fibonacci(number) {
+            if (number < 2) {
+                return number;
+            } else {
+                return fibonacci(number - 2) + fibonacci(number - 1);
+            }
+        }
+
+        // 출력합니다.
+        alert(fibonacci(100));
+    </script>
+</head>
+<body>
+</body>
+</html>

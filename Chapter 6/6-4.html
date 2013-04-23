@@ -1,0 +1,15 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 6</title>
+</head>
+<body>
+    <input id="files" type="file" multiple="multiple" />
+    <script>
+        var filesInput = document.getElementById('files');
+        filesInput.onchange = function () {
+            console.log(this.files);
+        };
+    </script>
+</body>
+</html>

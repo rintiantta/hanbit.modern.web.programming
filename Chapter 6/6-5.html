@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 6</title>
+</head>
+<body>
+    <input id="file-input" type="file" />
+    <script>
+        var fileInput = document.getElementById('file-input');
+        fileInput.onchange = function () {
+            // 변수를 선언합니다.
+            var files = this.files;
+
+            // 반복을 수행합니다.
+            for (var i = 0; i < files.length; i++) {
+                // 변수를 선언합니다.
+                var file = files.item(i);
+
+                // 파일을 읽습니다.
+                var reader = new FileReader();
+                reader.onload = function () {
+                    console.log(reader.result);
+                };
+                reader.readAsText(file);
+            }
+        };
+    </script>
+</body>
+</html>

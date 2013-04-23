@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Worker</title>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 워커를 선언합니다.
+            var worker = new Worker('Worker.js');
+            worker.onmessage = function (event) {
+                // 출력합니다.
+                $('#result').text('Result: ' + event.data);
+
+                // 타이머와 워커를 종료합니다.
+                worker.terminate();
+                clearInterval(timer);
+            };
+            worker.postMessage(45);
+
+            // 타이머를 시작합니다.
+            var time = 0;
+            var timer = setInterval(function () {
+                $('#time').text('Seconds: ' + time++);
+            }, 1000);
+        });
+    </script>
+</head>
+<body>
+    <h1 id="time"></h1>
+    <h1 id="result"></h1>
+</body>
+</html>

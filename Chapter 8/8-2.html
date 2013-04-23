@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>User Media Basic</title>
+    <script src="prefix.js"></script>
+    <!-- 프리픽스를 제거합니다. -->
+    <script>
+        removePrefix(navigator, 'getUserMedia');
+    </script>
+    <script>
+        window.addEventListener('load', function () {
+            // 마이크에 접근합니다.
+            navigator.getUserMedia({
+                video: true,
+                audio: true
+            }, function (stream) {
+
+            });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

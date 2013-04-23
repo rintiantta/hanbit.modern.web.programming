@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 5</title>
+    <script>
+        var fibo = 1;
+        var fibo1 = 0;
+        var fibo2 = 1;
+
+        console.time('fibonacci');
+        for (var i = 0; i < 100 - 1; i++) {
+            fibo += fibo1;
+            fibo1 = fibo2;
+            fibo2 = fibo;
+        }
+        console.log(fibo);
+        console.timeEnd('fibonacci');
+    </script>
+</head>
+<body>
+
+</body>
+</html>

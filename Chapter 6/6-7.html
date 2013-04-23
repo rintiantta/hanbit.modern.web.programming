@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 6</title>
+</head>
+<body>
+    <input id="file-input" type="file" />
+    <script>
+        var fileInput = document.getElementById('file-input');
+        fileInput.onchange = function () {
+            // 변수를 선언합니다.
+            var files = this.files;
+
+            // 반복을 수행합니다.
+            for (var i = 0; i < files.length; i++) {
+                // 변수를 선언합니다.
+                var file = files.item(i);
+                var objectURL = URL.createObjectURL(file);
+
+                // 이미지를 생성합니다.
+                var image = document.createElement('img')
+                image.width = 400;
+                image.height = 300;
+                image.src = objectURL;
+
+                // 출력합니다.
+                document.body.appendChild(image);
+            }
+        };
+    </script>
+</body>
+</html>

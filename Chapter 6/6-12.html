@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Blob Basic</title>
+    <!-- 웹 워커 대상 파일 -->
+    <script type="text/worker">
+        onmessage = function (event) {
+            postMessage('ECHO: ' + event.data);
+        };
+    </script>
+    <!-- Blob 객체를 생성합니다. -->
+    <script>
+        // 변수를 선언합니다.
+        var text = document.querySelector('script[type="text/worker"]').textContent;
+        var blob = new Blob([text], {
+            type: 'text/javascript'
+        });
+    </script>
+    <!-- 웹 워커를 생성합니다. -->
+    <script>
+        var worker = new Worker(URL.createObjectURL(blob));
+        worker.onmessage = function (event) {
+            // 출력합니다.
+            alert(event.data);
+
+            // 워커를 종료합니다.
+            worker.terminate();
+        };
+        worker.postMessage('Inline Worker');
+    </script>
+</head>
+<body>
+
+</body>
+</html>

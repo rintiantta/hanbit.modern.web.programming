@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 9</title>
+    <script src="prefix.js"></script>
+    <script>
+        removePrefix(window, 'AudioContext');
+    </script>
+    <script>
+        // 변수를 선언합니다.
+        var context = new AudioContext();
+
+        // 음악 파일을 가져옵니다.
+        var request = new XMLHttpRequest();
+        request.responseType = 'arraybuffer';
+        request.onload = function () {
+            context.decodeAudioData(request.response, function (buffer) {
+                // 노드를 생성합니다.
+                var source = context.createBufferSource();
+
+                // 노드를 설정합니다.
+                source.buffer = buffer;
+
+                // 음악을 재생합니다.
+                source.noteOn(0);
+            });
+        };
+        request.open('GET', 'Kalimba.mp3', true);
+        request.send();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

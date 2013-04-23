@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Drag Basic</title>
+    <style>
+        #dropzone {
+            height: 100px;
+            border: 3px solid black;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="prefix.js"></script>
+    <script>
+        removePrefix(window, 'URL');
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#dropzone').on({
+                dragover: function (event) {
+                    // 기본 이벤트를 제거합니다.
+                    event.preventDefault();
+                },
+                drop: function (event) {
+                    // 파일을 추출합니다.
+                    var files = event.originalEvent.dataTransfer.files;
+
+                    // 파일을 읽습니다.
+                    for (var i = 0; i < files.length; i++) {
+                        // 변수를 선언합니다.
+                        var file = files[i];
+
+                        // 화면에 이미지를 추가합니다.
+                        $('<img />', {
+                            src: URL.createObjectURL(file)
+                        }).appendTo('body');
+                    }
+
+                    // 기본 이벤트를 제거합니다.
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="dropzone"></div>
+</body>
+</html>

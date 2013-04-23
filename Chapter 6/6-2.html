@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 6</title>
+</head>
+<body>
+    <input id="file-input" type="file" />
+    <script>
+        var fileInput = document.getElementById('file-input');
+        fileInput.onchange = function () {
+            // 변수를 선언합니다.
+            var files = this.files;
+        };
+    </script>
+</body>
+</html>

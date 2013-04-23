@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 9</title>
+    <script src="prefix.js"></script>
+    <script>
+        removePrefix(window, 'AudioContext');
+    </script>
+    <script>
+        // 변수를 선언합니다.
+        var context = new AudioContext();
+
+        // 음악 파일을 가져옵니다.
+        var request = new XMLHttpRequest();
+        request.responseType = 'arraybuffer';
+        request.onload = function () {
+            context.decodeAudioData(request.response, function (buffer) {
+                // 노드를 생성합니다.
+                var source = context.createBufferSource();
+                var analyser = context.createAnalyser();
+                var speaker = context.destination;
+
+                // 노드를 설정합니다.
+                source.buffer = buffer;
+
+                // 노드를 연결합니다.
+                source.connect(analyser);
+                analyser.connect(speaker);
+
+                // 음악을 재생합니다.
+                source.noteOn(0);
+
+                // 변수를 선언합니다.
+                var freqByteData = new Uint8Array(analyser.frequencyBinCount);
+                var canvas = document.getElementById('canvas');
+                var draw = canvas.getContext('2d');
+                var width = canvas.width;
+                var height = canvas.height;
+                var blockWidth = 10;
+
+                // 타이머를 시작합니다.
+                setInterval(function () {
+                    // 데이터를 추출합니다.
+                    analyser.getByteFrequencyData(freqByteData);
+
+                    // 화면을 구성합니다.
+                    draw.fillStyle = 'white';
+                    draw.clearRect(0, 0, width, height);
+                    draw.fillStyle = 'black';
+
+                    for (var i = 0; i < freqByteData.length; i = i + blockWidth) {
+                        // 변수를 선언합니다.
+                        var magnitude = freqByteData[i];
+                        var outputHeight = height - magnitude;
+                        var outputWidth = blockWidth - 1;
+
+                        // 막대기를 그립니다.
+                        draw.fillRect(i + 1, outputHeight, outputWidth, magnitude);
+                    }
+                }, 1000 / 60);
+            });
+        };
+        request.open('GET', 'Kalimba.mp3', true);
+        request.send();
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="600" height="300"></canvas>
+</body>
+</html>

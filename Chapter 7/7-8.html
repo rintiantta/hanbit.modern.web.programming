@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Drag Basic</title>
+    <style>
+        h1 { display: inline; }
+        h1.active { background: red; }
+
+        div {
+            width: 300px;
+            height: 100px;
+            border: 3px solid black;
+        }
+        div.active {
+            border: 3px dashed black;
+            background: orange;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 이벤트를 연결합니다.
+            $('h1').on({
+                dragstart: function (event) {
+                    $(this).addClass('active');
+                },
+                dragend: function (event) {
+                    $(this).removeClass('active');
+                }
+            });
+
+            // 이벤트를 연결합니다.
+            $('div').on({
+                dragenter: function (event) {
+                    $(this).addClass('active');
+                },
+                dragleave: function (event) {
+                    $(this).removeClass('active');
+                },
+                dragover: function (event) {
+                    event.preventDefault();
+                },
+                drop: function (event) {
+                    $('h1.active').appendTo(this);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div></div>
+    <h1 draggable="true">Drag it!</h1>
+</body>
+</html>

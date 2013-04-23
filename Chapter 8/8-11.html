@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>User Media Basic</title>
+    <script src="prefix.js"></script>
+    <script src="glfx.js"></script>
+    <!-- 프리픽스를 제거합니다. -->
+    <script>
+        removePrefix(navigator, 'getUserMedia');
+    </script>
+    <script>
+        window.addEventListener('load', function () {
+            // 마이크에 접근합니다.
+            navigator.getUserMedia({
+                video: true,
+                audio: true
+            }, function (stream) {
+                // 웹캠을 설정합니다.
+                var source = URL.createObjectURL(stream);
+                var video = document.createElement('video');
+                video.src = source;
+                video.autoplay = true;
+
+                // 비디오 크기 설정
+                video.width = 640;
+                video.height = 480;
+
+                // 캔버스 설정
+                var canvas = fx.canvas();
+                document.body.appendChild(canvas);
+
+                // 타이머를 시작합니다.
+                setInterval(function () {
+                    // 그림을 그립니다.
+                    var texture = canvas.texture(video);
+                    canvas.draw(texture).dotScreen(320, 230, 1.1, 8.67).update();
+                }, 1000 / 60);
+            });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

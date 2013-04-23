@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 5</title>
+    <script>
+        // 객체를 생성합니다.
+        var request = new XMLHttpRequest();
+
+        // 이벤트를 연결합니다.
+        request.onreadystatechange = function () {
+            if (request.readyState == 4) {
+                // 웹 브라우저가 요청을 완료하면 이 단위를 실행합니다.
+                alert(request.response);
+            }
+        };
+
+        // 객체를 설정합니다.
+        request.open('GET', 'HTMLPage.html', true);
+
+        // 웹 브라우저에 웹 요청을 수행할 것을 부탁합니다.
+        request.send();
+
+        // 정지합니다.
+        while (true) { }
+    </script>
+</head>
+<body>
+</body>
+</html>

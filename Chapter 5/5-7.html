@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 5</title>
+    <script>
+        // 변수를 선언합니다.
+        var worker = new Worker('Worker.js');
+
+        // 이벤트를 연결합니다.
+        worker.onmessage = function (event) {
+            // 출력합니다.
+            alert(event.data);
+        };
+
+        // 데이터를 전달합니다.
+        worker.postMessage(100);
+    </script>
+</head>
+<body>
+</body>
+</html>

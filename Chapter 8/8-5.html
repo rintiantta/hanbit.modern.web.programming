@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>User Media Basic</title>
+    <style>
+        video {
+            -webkit-filter: contrast(70%) invert(80%);
+            filter: contrast(70%) invert(80%);
+        }
+    </style>
+    <script src="prefix.js"></script>
+    <!-- 프리픽스를 제거합니다. -->
+    <script>
+        removePrefix(navigator, 'getUserMedia');
+    </script>
+    <script>
+        window.addEventListener('load', function () {
+            // 마이크에 접근합니다.
+            navigator.getUserMedia({
+                video: true,
+                audio: true
+            }, function (stream) {
+                // 웹캠을 설정합니다.
+                var source = URL.createObjectURL(stream);
+                var video = document.createElement('video');
+                video.src = source;
+                video.autoplay = true;
+
+                // 캔버스 설정
+                var canvas = document.createElement('canvas');
+                var context = canvas.getContext('2d');
+                canvas.width = 640;
+                canvas.height = 480;
+
+                // 그림
+                document.body.appendChild(canvas);
+
+                // 타이머를 시작합니다.
+                setInterval(function () {
+                    // 그림을 그립니다.
+                    context.drawImage(video, 0, 0);
+                    requestAnimationFrame(animate);
+                }, 1000 / 60);
+            });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

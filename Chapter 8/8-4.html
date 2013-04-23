@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>User Media Basic</title>
+    <style>
+        video {
+            -webkit-filter: contrast(70%) invert(80%);
+            filter: contrast(70%) invert(80%);
+        }
+    </style>
+    <script src="prefix.js"></script>
+    <!-- 프리픽스를 제거합니다. -->
+    <script>
+        removePrefix(navigator, 'getUserMedia');
+    </script>
+    <script>
+        window.addEventListener('load', function () {
+            // 마이크에 접근합니다.
+            navigator.getUserMedia({
+                video: true,
+                audio: true
+            }, function (stream) {
+                // 웹캠을 설정합니다.
+                var source = URL.createObjectURL(stream);
+                var video = document.createElement('video');
+                video.src = source;
+                video.autoplay = true;
+
+                // 화면에 문서 객체를 추가합니다.
+                document.body.appendChild(video);
+            });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
