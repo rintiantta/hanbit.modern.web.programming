@@ -1,0 +1,57 @@
+﻿<!D OCTYPE html>
+<html>
+<head>
+    <title>Backbone.js Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+    <!-- 라우터를 상속합니다. -->
+    <script>
+        // 라우터를 상속합니다.
+        var Router = Backbone.Router.extend({
+            routes: {
+                '': 'onNothing',
+                'red': 'onRed',
+                'green': 'onGreen',
+                'blue': 'onBlue',
+            },
+            onRed: function () {
+                $('body').css('background', 'red');
+            },
+            onGreen: function () {
+                $('body').css('background', 'green');
+            },
+            onBlue: function () {
+                $('body').css('background', 'blue');
+            }
+        });
+    </script>
+    <!-- 애플리케이션을 시작합니다. -->
+    <script>
+        $(document).ready(function () {
+            // Backbone.Router 객체를 생성합니다.
+            var router = new Router();
+
+            // 애플리케이션을 시작합니다.
+            Backbone.history.start();
+        });
+    </script>
+</head>
+<body class="container">
+    <!-- 제목 -->
+    <h1>Router <span id="title">0 +0 </span></h1>
+    <!-- 색상 -->
+    <a href="#color/white" class="btn">White</a>
+    <a href="#color/azure" class="btn">Azure</a>
+    <a href="#color/blue" class="btn">Blue</a>
+    <a href="#color/coral" class="btn">Coral</a>
+    <!-- 분할 -->
+    <hr />
+    <!-- 글자 --> 
+    <a href="#title/0-0" class="btn">00</a>
+    <a href="#title/0-1" class="btn">01</a>
+    <a href="#title/1-0" class="btn">10</a>
+    <a href="#title/1-1" class="btn">11</a>
+</body>
+</html>

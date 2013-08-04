@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html ng-app="custom">
+<head>
+    <title>Directives</title>
+    <script src="angular.min.js"></script>
+    <script src="Chart.js"></script>
+    <script>
+        var app = angular.module('custom', []);
+        app.directive('chartType', function () {
+            return function (scope, element, attrs) {
+                var context = element[0].getContext('2d');
+                var chart = new Chart(context);
+                if (attrs.chartType == 'doughnut') {
+                    scope.$watch(attrs.chartData, function (newValue, oldValue) {
+                        chart.Doughnut(newValue)
+                    }, true);
+                }
+            };
+        });
+
+        function chartController($scope, $timeout) {
+            $scope.data = [{
+                value: 40,
+                color: 'red'
+            }, {
+                value: 160,
+                color: 'green'
+            }, {
+                value: 120,
+                color: 'blue'
+            }];
+
+            $timeout(function () {
+                $scope.data[0].value = 200
+            }, 5000);
+        }
+    </script>
+</head>
+<body ng-controller="chartController">
+    <canvas chart-data="data" chart-type="doughnut" width="400" height="400"></canvas>
+</body>
+</html>

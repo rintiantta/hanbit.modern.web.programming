@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Angular.js</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="angular.js"></script>
+    <script>
+        function basicController($scope) {
+            // Model 객체를 생성합니다.
+            $scope.title = 'Students List';
+            $scope.students = [{
+                id: 1,
+                name: 'insung',
+                score: 4.2
+            }, {
+                id: 2,
+                name: 'hajin',
+                score: 4.5
+            }];
+
+            // 메서드를 생성합니다.
+            $scope.getAverage = function () {
+                var output = 0;
+                for (var i = 0; i < $scope.students.length; i++) {
+                    output += $scope.students[i].score;
+                }
+                return output / $scope.students.length;
+            };
+
+            // 이벤트 리스너를 생성합니다.
+            $scope.submit = function () {
+                // 데이터를 추가합니다.
+                $scope.students.push({
+                    id: $scope.students.length + 1,
+                    name: $scope.name,
+                    score: 0.0
+                });
+
+                // 초기화합니다.
+                $scope.name = '';
+            };
+        }
+    </script>
+</head>
+<body class="container">
+    <div ng-controller="basicController">
+        <h1>{{ title }}</h1>
+        <form class="form-inline" ng-submit="submit()">
+            <div class="input-append">
+                <input ng-model="name" type="text">
+                <div class="btn-group">
+                    <input type="submit" class="btn" value="Add" />
+                </div>
+            </div>
+        </form>
+        <table class="table">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Score</th>
+            </tr>
+            <tr ng-repeat="student in students">
+                <td>{{ student.id }}</td>
+                <td>{{ student.name }}</td>
+                <td>
+                    <input type="number" class="input-small" ng-model="student.score" />
+                </td>
+            </tr>
+        </table>
+        <h3>Average: {{ getAverage() }}</h3>
+    </div>
+</body>
+</html>

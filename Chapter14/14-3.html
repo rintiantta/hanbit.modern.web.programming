@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Knockout Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="knockout-2.2.0.js"></script>
+    <script>
+        // 모델을 선언합니다.
+        var personName = ko.observable('인성');
+
+        // 모델의 속성에 접근합니다.
+        personName('윤인성');
+        alert(personName());
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Angular.js</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="angular.js"></script>
+    <script>
+        function basicController($scope) {
+            $scope.template = 'template.html'
+            $scope.title = 'Template Basic';
+        }
+    </script>
+</head>
+<body class="container">
+    <div ng-controller="basicController">
+        <div ng-include src="template"></div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi consequat vestibulum lorem sagittis volutpat. Quisque vel lorem arcu. Maecenas id placerat arcu. Curabitur porttitor consequat tellus vel accumsan. Vestibulum volutpat euismod orci varius luctus. Aenean nec luctus turpis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur rutrum quis lectus non dictum. Donec adipiscing vehicula velit, non porta ante bibendum a. Aliquam id quam egestas, mollis urna quis, bibendum est. Donec tristique, massa eu vehicula interdum, quam elit egestas ipsum, at scelerisque mauris dolor quis ligula. Donec fermentum felis eu suscipit tincidunt.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+﻿<div class="container">
+    <a ng-click="logout()" class="logout btn-link pull-right">Logout</a>
+    <h1>Todos</h1>
+    <ul class="unstyled">
+        <li ng-repeat="todo in todos" ng-style="opacity(todo)">
+            <label class="checkbox">
+                <input type="checkbox"
+                       ng-model="todo.completed"
+                       ng-change="checkChange(todo)" />
+                <span>{{ todo.title }}</span>
+            </label>
+        </li>
+    </ul>
+    <form id="item-form" class="form-inline">
+        <input ng-model="title" type="text" />
+        <button ng-click="add()" class="btn btn-success">Add</button>
+    </form>
+    <p><a ng-click="remove()" class="btn btn-danger">Remove items</a></p>
+</div>

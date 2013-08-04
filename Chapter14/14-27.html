@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Knockout Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="knockout-2.2.0.js"></script>
+</head>
+<body class="container">
+    <label class="checkbox">
+        <input type="checkbox" data-bind="checked:checked" />
+        <h4>Enable Value</h4>
+    </label>
+    <input type="text" data-bind="enable:checked" />
+    <script>
+        // 바인딩합니다.
+        ko.applyBindings({
+            checked: ko.observable(true)
+        });
+    </script>
+</body>
+</html>

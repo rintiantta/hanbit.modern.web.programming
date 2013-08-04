@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo List Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="knockout-2.2.0.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.getJSON('/todos', function (results) {
+                // 변수를 생성합니다.
+                var todos = ko.observableArray([]);
+                ko.utils.arrayForEach(results, function (item) {
+                    todos.push({
+                        _id: ko.observable(item._id),
+                        title: ko.observable(item.title),
+                        completed: ko.observable(item.completed)
+                    });
+                });
+                // 바인딩합니다.
+                ko.applyBindings({
+                    title: ko.observable(''),
+                    todos: todos,
+                    add: function (self) {
+                        $.ajax('/todos', {
+                            type: 'POST',
+                            data: {
+                                title: self.title(),
+                                dummy: new Date().getTime()
+                            },
+                            success: function (results) {
+                                self.todos.push({
+                                    _id: ko.observable(results[0]._id),
+                                    title: ko.observable(results[0].title),
+                                    completed: ko.observable(results[0].completed)
+                                });
+                                self.title('');
+                            }
+                        })
+                    },
+                    remove: function (self) {
+                        var todos = self.todos();
+                        for (var i = todos.length - 1; i >= 0; i--) {
+                            if (todos[i].completed) {
+                                (function (i) {
+                                    $.ajax('/todos/' + todos[i]._id, {
+                                        type: 'DELETE',
+                                        data: { dummy: new Date().getTime() },
+                                        success: function () {
+                                            self.todos.splice(i, 1);
+                                        }
+                                    });
+                                })(i);
+                            }
+                        }
+                    },
+                    checkChange: function (self) {
+                        $.ajax('/todos/' + self._id(), {
+                            type: 'PUT',
+                            data: {
+                                completed: (!self.completed()).toString(),
+                                dummy: new Date().getTime()
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <a href="/logout" class="logout btn-link pull-right">Logout</a>
+        <h1>Todos</h1>
+        <ul class="unstyled" data-bind="foreach:todos">
+            <li data-bind="style:{ opacity: completed() ? 0.3 : 1.0 }">
+                <label class="checkbox">
+                    <input type="checkbox" data-bind="
+                        checked: completed,
+                        event:{ change:$parent.checkChange }" />
+                    <span data-bind="text:title"></span>
+                </label>
+            </li>
+        </ul>
+        <form class="form-inline">
+            <input type="text" data-bind="value:title" />
+            <button class="btn btn-success" data-bind="click:add">Add</button>
+        </form>
+        <p><a class="btn btn-danger" data-bind="click:remove">Remove items</a></p>
+    </div>
+</body>
+</html>

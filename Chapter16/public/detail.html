@@ -1,0 +1,19 @@
+﻿<div>
+    <h1>{{ posts[0].authorName }}</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt sodales mi nec sodales. Aenean pellentesque neque eget ligula luctus in gravida augue aliquam.</p>
+    <hr />
+</div>
+<div ng-repeat="post in posts">
+    <h4>{{ post.authorName }}</h4>
+    <p><small>{{ post.regdate.toDate().format() }}</small></p>
+    <p>{{ post.status }}</p>
+    <div class="well">
+        <div ng-repeat="reply in post.replies">
+            <h5><a href="#/friends/{{reply.authorId}}">{{reply.authorName}}</a></h5>
+            <p>{{ reply.status }}</p>
+        </div>
+        <input type="text" class="input-block-level" ng-model="post.content" />
+        <input type="button" value="Reply" class="btn btn-success" ng-click="onReply(post)" />
+    </div>
+    <hr />
+</div>

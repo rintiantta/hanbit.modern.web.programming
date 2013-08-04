@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Knockout Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="knockout-2.2.0.js"></script>
+</head>
+<body class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>이름</th>
+                <th>지역</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach:people">
+            <tr>
+                <td data-bind="text:name"></td>
+                <td data-bind="text:region"></td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        ko.applyBindings({
+            people: ko.observableArray([{
+                name: ko.observable('윤인성'),
+                region: ko.observable('서울특별시 강서구')
+            }, {
+                name: ko.observable('연하진'),
+                region: ko.observable('미국 로스엔젤레스 패서디나')
+            }])
+        });
+    </script>
+</body>
+</html>

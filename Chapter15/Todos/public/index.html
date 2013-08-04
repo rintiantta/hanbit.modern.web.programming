@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html ng-app="todo">
+<head>
+    <title>Todo List Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="angular.min.js"></script>
+    <script>
+        app = angular.module('todo', [], function ($routeProvider) {
+            $routeProvider.when('/main', {
+                templateUrl: 'main.html',
+                controller: function ($scope, $http) {
+                    $http.get('/users/me').success(function (data) {
+                        $http.get('/todos').success(function (data) {
+                            $scope.todos = data;
+                        });
+                        $scope.logout = function () {
+                            $http.get('/users/logout').success(function (data) {
+                                location.hash = '/login'
+                            });
+                        };
+                        $scope.add = function () {
+                            $http.post('/todos', {
+                                title: $scope.title
+                            }).success(function (data) {
+                                $scope.todos.push(data[0]);
+                                $scope.title = '';
+                            });
+                        };
+                        $scope.checkChange = function (self) {
+                            $http.put('/todos/' + self._id, {
+                                completed: self.completed
+                            });
+                        };
+                        $scope.remove = function () {
+                            for (var i = $scope.todos.length - 1; i >= 0; i--) {
+                                if ($scope.todos[i].completed) {
+                                    (function (i) {
+                                        var url = '/todos/' + $scope.todos[i]._id;
+                                        $http.delete(url).success(function () {
+                                            $scope.todos.splice(i, 1);
+                                        });
+                                    })(i);
+                                }
+                            }
+                        };
+                        $scope.opacity = function (todo) {
+                            return todo.completed ? { opacity: 0.2 } : {};
+                        };
+                    }).error(function () {
+                        location.hash = '/login'              
+                    });
+                }
+            });
+            $routeProvider.when('/login', {
+                templateUrl: 'login.html',
+                controller: function ($scope, $http) {
+                    $http.get('/users/me').success(function (data) {
+                        location.hash = '/main';
+                    }).error(function () {
+                        $scope.login = '';
+                        $scope.password = '';
+                        $scope.submit = function () {
+                            $http.post('/users/login', {
+                                login: $scope.login,
+                                password: $scope.password
+                            }).success(function (data) {
+                                location.hash = '/main';
+                            }).error(function (data) {
+                                $scope.login = '';
+                                $scope.password = '';
+                                alert('로그인 실패');
+                            });
+                        };
+                    });
+                }
+            });
+            $routeProvider.when('/register', {
+                templateUrl: 'register.html',
+                controller: function ($scope) {
+                    $scope.login = '';
+                    $scope.password = '';
+                    $scope.submit = function () {
+                        $http.post('/users', {
+                            login: $scope.login,
+                            password: $scope.password
+                        }).success(function (data) {
+                            location.hash = '/login';
+                        }).error(function (data) {
+                            $scope.login = '';
+                            $scope.password = '';
+                            alert('가입 실패');
+                        });
+                    };
+                }
+            });
+            $routeProvider.otherwise({
+                redirectTo: '/login'
+            });
+        });
+    </script>
+</head>
+<body ng-view>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Backbone.js Basic</title>
+    <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+    <script>
+        // Backbone.Model 객체를 생성합니다.
+        var person = new Backbone.Model({
+            name: '윤인성',
+            region: '서울특별시'
+        });
+
+        // 이벤트를 연결합니다: "이벤트:속성" 형태의 문자열을 사용합니다.
+        person.bind('change', function (model, attr) {
+            alert(attr + '로 변경합니다.');
+        });
+
+        // 속성을 추출합니다.
+        person.get('name');
+
+
+        // 속성을 입력합니다.
+        person.set('region', '서울특별시 강서구');
+    </script>
+</head>
+<body>
+
+</body>
+</html>

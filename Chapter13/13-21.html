@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Backbone.js Basic</title>
+    <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+    <script>
+        // Backbone.Collection 객체를 생성합니다.
+        var collection = new Backbone.Collection();
+
+        // 이벤트를 연결합니다.
+        collection.bind('add', function (item) {
+            console.log('Add: ' + item.get('name'));
+        });
+
+        collection.bind('remove', function (item) {
+            console.log('Remove: ' + item.get('name'));
+        });
+
+        collection.bind('reset', function () {
+            console.log('Reset');
+        });
+
+        // 데이터를 추가합니다.
+        collection.add({ name: '윤인성' });
+        collection.add({ name: '연하진' });
+        collection.add({ name: '윤명월' });
+        collection.add({ name: '윤아린' });
+
+        // 데이터를 제거합니다.
+        collection.remove(collection.at(0));
+
+        // 데이터를 초기화합니다.
+        collection.reset();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

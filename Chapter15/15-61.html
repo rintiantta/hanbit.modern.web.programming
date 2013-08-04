@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html ng-app="basic">
+<head>
+    <title>Angular.js</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="angular.js"></script>
+    <script>
+        // 모듈을 생성합니다.
+        var basic = angular.module('basic', []);
+
+        // 서비스를 생성합니다.
+        basic.factory('$custom', function ($rootScope) {
+            // 클로저로 은닉 변수를 만듭니다.
+            var timerId = null;
+            // 리턴합니다.
+            return {
+                startTimer: function (callback, interval) {
+                    timerId = setInterval(function () {
+                        callback();
+                        $rootScope.$apply();
+                    }, interval);
+                },
+                stopTimer: function () {
+                    clearInterval(timerId);
+                    timerId = null;
+                }
+            };
+        });
+    </script>
+    <script>
+        // 컨트롤러를 생성합니다.
+        basic.controller('basicController', function ($scope, $custom) {
+            // 변수를 입력합니다.
+            $scope.title = 'Factory';
+        });
+    </script>
+</head>
+<body class="container">
+    <div ng-controller="basicController">
+        <h1>{{ title }}</h1>
+    </div>
+</body>
+</html>

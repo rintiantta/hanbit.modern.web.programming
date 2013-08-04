@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Backbone.js Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+    <!-- Backbone.Router 객체를 생성합니다. -->
+    <script>
+        // Backbone.Router 객체를 생성합니다.
+        var router = new Backbone.Router({
+            routes: {
+                '': 'onNothing',
+                'red': 'onRed',
+                'green': 'onGreen',
+                'blue': 'onBlue'
+            }
+        });
+
+        // 이벤트를 연결합니다.
+        router.bind('route:onNothing', function () {
+            $('body').css('background', '');
+        });
+        router.bind('route:onRed', function () {
+            $('body').css('background', 'red');
+        });
+        router.bind('route:onGreen', function () {
+            $('body').css('background', 'green');
+        });
+        router.bind('route:onBlue', function () {
+            $('body').css('background', 'blue');
+        });
+    </script>
+    <!-- 애플리케이션을 시작합니다. -->
+    <script>
+        $(document).ready(function () {
+            Backbone.history.start();
+        });
+    </script>
+</head>
+<body class="container">
+    <h1>Router</h1>
+    <a href="#" class="btn">White</a>
+    <a href="#red" class="btn">Red</a>
+    <a href="#green" class="btn">Green</a>
+    <a href="#blue" class="btn">Blue</a>
+</body>
+</html>

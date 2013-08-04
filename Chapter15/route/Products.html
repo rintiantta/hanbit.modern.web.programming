@@ -1,0 +1,12 @@
+﻿<ul class="media-list">
+    <li class="media"  ng-repeat="product in products">
+        <a class="pull-left" href="#/products/{{ product.id }}">
+            <img class="media-object" src="{{ product.src }}" />
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">{{ product.name }}</h4>
+            <p>{{ product.price.min }}원 ~ {{ product.price.max }}원</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante vitae purus tempus rutrum. Morbi aliquet tincidunt tincidunt. Mauris vestibulum rutrum accumsan. Suspendisse a ante risus. Curabitur consequat dui sed augue luctus malesuada.</p>
+        </div>
+    </li>
+</ul>

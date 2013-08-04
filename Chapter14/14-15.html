@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Knockout Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="knockout-2.2.0.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+            ko.applyBindings({
+                title: ko.observable('Students'),
+                students: ko.observableArray([{
+                    id: 1,
+                    name: ko.observable('Insung'),
+                    score: ko.observable(4.0)
+                }, {
+                    id: 2,
+                    name: ko.observable('Hajin'),
+                    score: ko.observable(4.5)
+                }])
+            });
+        });
+    </script>
+</head>
+<body class="container">
+    <div data-bind="text:'<h1>Knockout.js</h1>'"></div>
+    <div data-bind="html:'<h1>Knockout.js</h1>'"></div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Angular.js</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="angular.js"></script>
+    <script>
+        function basicController($scope) {
+            $scope.title = 'Students List';
+            $scope.students = [{
+                name: 'insung',
+                score: 4.2
+            }, {
+                name: 'hajin',
+                score: 4.5
+            }];
+        }
+    </script>
+</head>
+<body class="container">
+    <div ng-controller="basicController">
+        <h1>{{ title }}</h1>
+    </div>
+</body>
+</html>

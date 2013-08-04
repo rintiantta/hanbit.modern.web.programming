@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Knockout Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="knockout-2.2.0.js"></script>
+</head>
+<body class="container">
+    <div data-bind="foreach:collection">
+        <h2><a data-bind="attr: { href:href }, text:name"></a></h2>
+        <p data-bind="text:description"></p>
+    </div>
+    <script>
+        // 바인딩합니다.
+        ko.applyBindings({
+            collection: ko.observableArray([{
+                name: '한빛미디어',
+                href: 'http://hanb.co.kr',
+                description: 'Lorem ipsum dolor sit amet'
+            }, {
+                name: '페이스북',
+                href: 'http://www.facebook.co.kr',
+                description: 'Lorem ipsum dolor sit amet'
+            }, {
+                name: '네이버',
+                href: 'http://naver.com',
+                description: 'Lorem ipsum dolor sit amet'
+            }])
+        });
+    </script>
+</body>
+</html>

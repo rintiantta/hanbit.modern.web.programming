@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html ng-app="basic">
+<head>
+    <title>Angular.js</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="angular.js"></script>
+    <script>
+        // 모듈을 생성합니다.
+        var basic = angular.module('basic', []);
+    </script>
+    <script>
+        // 컨트롤러를 생성합니다.
+        basic.controller('basicController', function ($scope) {
+            // 변수를 입력합니다.
+            $scope.title = 'Factory';
+            // 타이머를 연결합니다.
+            setInterval(function () {
+                $scope.title += '+';
+                $scope.$apply();
+            }, 1000);
+        });
+    </script>
+</head>
+<body class="container">
+    <div ng-controller="basicController">
+        <h1>{{ title }}</h1>
+    </div>
+</body>
+</html>

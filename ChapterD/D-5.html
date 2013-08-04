@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Deep Equal</title>
+    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.11.0.css" />
+    <script src="http://code.jquery.com/qunit/qunit-1.11.0.js"></script>
+</head>
+<body>
+    <div id="qunit"></div>
+    <script>
+        test('roughly equal', function () {
+            // 객체를 생성합니다.
+            var a = new Date(2013, 12, 9);
+            var b = new Date(2013, 12, 9);
+
+            // 객체를 비교합니다.
+            equal(a, b);
+        });
+
+        test('deep equal', function () {
+            // 객체를 생성합니다.
+            var a = new Date(2013, 12, 9);
+            var b = new Date(2013, 12, 9);
+
+            // 객체를 비교합니다.
+            deepEqual(a, b);
+        });
+    </script>
+</body>
+</html>

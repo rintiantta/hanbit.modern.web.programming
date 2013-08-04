@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Knockout Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="knockout-2.2.0.js"></script>
+</head>
+<body class="container">
+    <h1 data-bind="text:region"></h1>
+    <select data-bind="options:regions, selectedOptions:region"></select>
+    <script>
+        // 바인딩합니다.
+        ko.applyBindings({
+            region: ko.observable('선택하세요.'),
+            regions: ko.observableArray([
+                '강남점', '교대점', '선릉점',
+                '신촌점', '홍대점', '종로점'
+            ])
+        });
+    </script>
+</body>
+</html>

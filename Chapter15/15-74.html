@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html ng-app="custom">
+<head>
+    <title>Directives</title>
+    <script src="angular.min.js"></script>
+    <script>
+        // 애플리케이션을 생성합니다.
+        var app = angular.module('custom', []);
+        app.directive('customTimer', function ($http) {
+            return function (scope, element, attrs) {
+                scope.$watch('other', function (newValue, oldValue) {
+                    element.html(newValue);
+                });
+            };
+        });
+
+        function basicController($scope, $timeout) {
+            $scope.date = new Date().toString();
+            $scope.other = 'OtherData';
+            $timeout(call = function () {
+                // 변수를 변경합니다.
+                $scope.other += '+';
+                // 반복합니다.
+                $timeout(call, 1000)
+            }, 1000);
+        }
+    </script>
+</head>
+<body ng-controller="basicController">
+    <h1 custom-timer="model" custom-data="CustomData" data-other="OtherData"></h1>
+</body>
+</html>

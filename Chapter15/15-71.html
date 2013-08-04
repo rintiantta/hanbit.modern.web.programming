@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html ng-app="custom">
+<head>
+    <title>Directives</title>
+    <script src="angular.min.js"></script>
+    <script>
+        // 애플리케이션을 생성합니다.
+        var app = angular.module('custom', []);
+        app.directive('customTimer', function ($http) {
+            return function (scope, element, attrs) {
+            };
+        });
+
+        // 컨트롤러를 생성합니다.
+        function basicController($scope) {
+            $scope.date = new Date().toString();
+            $scope.other = 'OtherData';
+        }
+    </script>
+</head>
+<body ng-controller="basicController">
+    <h1 custom-timer="model" custom-data="CustomData" data-other="OtherData"></h1>
+</body>
+</html>

@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html ng-app="basic">
+<head>
+    <title>Angular.js</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="angular.js"></script>
+    <!-- 데이터를 생성합니다. -->
+    <script>
+        var products = [{
+            id: 0,
+            name: 'Galaxy Note 2',
+            price: {
+                min: 659000,
+                max: 1200000
+            },
+            src: 'images/GalaxyNoteII.jpg'
+        }, {
+            id: 1,
+            name: 'Galaxy S 3',
+            price: {
+                min: 430000,
+                max: 990000
+            },
+            src: 'images/GalaxySIII.jpg'
+        }, {
+            id: 2,
+            name: 'iPhone 5',
+            price: {
+                min: 554000,
+                max: 814000
+            },
+            src: 'images/IPhone5.jpg'
+        }, {
+            id: 3,
+            name: 'Optimus LTE 2',
+            price: {
+                min: 423000,
+                max: 665000
+            },
+            src: 'images/OptimusLTE2.jpg'
+        }, {
+            id: 4,
+            name: 'Optimus Vu 2',
+            price: {
+                min: 256900,
+                max: 990000
+            },
+            src: 'images/OptimusVuII.jpg'
+        }];
+    </script>
+    <!-- 라우터를 생성합니다. -->
+    <script>
+        // 모듈을 생성합니다.
+        var basic = angular.module('basic', [], function ($routeProvider) {
+            console.log($routeProvider);
+            // Route - List
+            $routeProvider.when('/products', {
+                templateUrl: 'products.html',
+                controller: ListController
+            });
+
+            // Route - Detail
+            $routeProvider.when('/products/:id', {
+                templateUrl: 'product.html',
+                controller: DetailController
+            });
+
+            // Route - Other
+            $routeProvider.otherwise({
+                redirectTo: '/products'
+            });
+        });
+    </script>
+    <!-- 컨트롤러를 생성합니다. -->
+    <script>
+        function ListController($scope, $routeParams) {
+            $scope.$parent.title = 'Product List';
+            $scope.products = products;
+        }
+
+        function DetailController($scope, $routeParams) {
+            $scope.$parent.title = 'Product Detail';
+            $scope.product = products[$routeParams.id]
+        }
+    </script>
+</head>
+<body class="container">
+    <h1>{{ title }}</h1>
+    <hr />
+    <div ng-view></div>
+</body>
+</html>

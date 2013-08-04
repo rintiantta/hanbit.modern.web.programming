@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Knockout Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="knockout-2.2.0.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+            function StudentsViewModel() {
+                this.title = 'Students';
+                this.students = ko.observableArray([{
+                    id: 1,
+                    name: ko.observable('Insung'),
+                    score: ko.observable(4.0)
+                }, {
+                    id: 2,
+                    name: ko.observable('Hajin'),
+                    score: ko.observable(4.5)
+                }]);
+                this.average = ko.computed(function () {
+
+                }, this);
+            }
+
+            ko.applyBindings(new StudentsViewModel());
+        });
+    </script>
+</head>
+<body class="container">
+    <h1 data-bind="text:title"></h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach:students">
+            <tr>
+                <td data-bind="text:id"></td>
+                <td data-bind="text:name"></td>
+                <td><input type="number" data-bind="value:score" /></td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Average: <span data-bind="text:average"></span></h2>    
+</body>
+</html>

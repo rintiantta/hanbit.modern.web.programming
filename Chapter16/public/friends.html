@@ -1,0 +1,60 @@
+﻿<!-- search-->
+<div>
+    <h1>Search</h1>
+    <form class="form-inline" ng-submit="onSearch()">
+        <input type="text" ng-model="query" />
+        <input type="submit" class="btn btn-primary" value="search" />
+    </form>
+</div>
+<hr />
+<!-- acceptFriends -->
+<h2 ng-show="acceptFriends && acceptFriends.length != 0">Accept Friends</h2>
+<ul class="media-list">
+    <li class="media" ng-repeat="friend in acceptFriends">
+        <a class="pull-left" href="#">
+            <img class="media-object" src="http://placehold.it/70x70" />
+        </a>
+        <div class="media-body">
+            <h4>{{ friend.email }}</h4>
+            <a class="btn btn-info" href="#/friends/{{ friend._id }}">Go to Friend</a>
+        </div>
+    </li>
+</ul>
+<!-- requestFriends -->
+<h2 ng-show="requestFriends && requestFriends.length != 0">Request Friends</h2>
+<ul class="media-list">
+    <li class="media" ng-repeat="friend in requestFriends">
+        <a class="pull-left" href="#">
+            <img class="media-object" src="http://placehold.it/70x70" />
+        </a>
+        <div class="media-body">
+            <h4>{{ friend.email }}</h4>
+        </div>
+    </li>
+</ul>
+<!-- pendingFriends -->
+<h2 ng-show="pendingFriends && pendingFriends.length != 0">Pending Friends</h2>
+<ul class="media-list">
+    <li class="media" ng-repeat="friend in pendingFriends">
+        <a class="pull-left" href="#">
+            <img class="media-object" src="http://placehold.it/70x70" />
+        </a>
+        <div class="media-body">
+            <h4>{{ friend.email }}</h4>
+            <button class="btn btn-info" ng-click="onAcceptFriend(friend)">Accept Friend</button>
+        </div>
+    </li>
+</ul>
+<!-- otherFriends -->
+<h2 ng-show="other && other.length != 0">Search Result</h2>
+<ul class="media-list">
+    <li class="media" ng-repeat="friend in other">
+        <a class="pull-left" href="#">
+            <img class="media-object" src="http://placehold.it/70x70" />
+        </a>
+        <div class="media-body">
+            <h4>{{ friend.email }}</h4>
+            <button class="btn btn-info" ng-click="onRequestFriend(friend)">Request Friend</button>
+        </div>
+    </li>
+</ul>

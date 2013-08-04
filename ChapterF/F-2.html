@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+    <title>Chart.js Basic</title>
+    <script src="Chart.js"></script>
+</head>
+<body>
+    <canvas id="chart" width="500" height="400"></canvas>
+    <script>
+        // 변수를 선언합니다.
+        var canvas = document.getElementById('chart');
+        var context = canvas.getContext('2d');
+        var chart = new Chart(context);
+
+        // 차트를 그립니다.
+        chart.Doughnut([{
+            value: 40,
+            color: 'red'
+        }, {
+            value: 160,
+            color: 'green'
+        }, {
+            value: 120,
+            color: 'blue'
+        }])
+    </script>
+</body>
+</html>

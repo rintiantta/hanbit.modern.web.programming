@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Angular Basic</title>
+    <script src="angular.js"></script>
+    <script>
+        function basicController($scope) {
+            $scope.messageBox = function (event) {
+                alert($scope.message);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div ng-controller="basicController">
+        <input type="text" ng-model="message" />
+        <button ng-click="messageBox($event)">Show</button>
+    </div>
+</body>
+</html>

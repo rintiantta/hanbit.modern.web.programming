@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Deep Equal</title>
+    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.11.0.css" />
+    <script src="http://code.jquery.com/qunit/qunit-1.11.0.js"></script>
+</head>
+<body>
+    <div id="qunit"></div>
+    <script>
+        asyncTest('ajax test', function () {
+            // 요청
+            var request = new XMLHttpRequest();
+            request.open('GET', 'HTMLPage.html', true);
+            request.onreadystatechange = function () {
+                console.log(request.readyState);
+                if (request.readyState == 4) {
+                    if (request.status == 200) {
+                        ok(true, 'Ajax success');
+                    } else {
+                        fail(true, 'Ajax fail');
+                    }
+                }
+            };
+            request.send();
+
+            // 테스트 개수를 지정하고 시작
+            expect(1);
+            start();
+        });
+</script>
+</body>
+</html>

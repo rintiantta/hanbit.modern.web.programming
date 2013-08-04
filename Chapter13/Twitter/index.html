@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Backbone.js Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+    <script id="item-template" type="text/template">
+        <h4><%= from_user %></h4>
+        <p><%= text %></p>
+        <hr />
+    </script>
+    <script>
+        // Backbone.View 생성자 함수를 상속합니다.
+        var ItemView = Backbone.View.extend({
+            tagName: 'div',
+            template: _.template($('#item-template').html()),
+            render: function () {
+                // 데이터를 표시합니다.
+                this.$el.html(this.template(this.model.toJSON()));
+                
+                // 리턴합니다.
+                return this;
+            }
+        });
+        // Backbone.View 생성자 함수를 상속합니다.
+        var MainView = Backbone.View.extend({
+            // 사용자 정의 속성
+            query: 'html5',
+
+            // 원래 뷰와 관련된 속성
+            el: '#main-container',
+            events: {
+                'submit form': function (event) {
+                    // query 속성을 지정합니다.
+                    this.query = this.$('input[type="text"]').val();
+                    this.render();
+
+                    // 초기화
+                    this.$('input[type="text"]').val('');
+                    event.preventDefault();
+                }
+            },
+            render: function () {
+                // 변수를 선언합니다.
+                var url = 'http://search.twitter.com/search.json?q=' + this.query + 
+                    '&callback=?'
+                // 데이터를 불러옵니다.
+                $.getJSON(url, function (data) {
+                    // 초기화
+                    this.$('#tweet-container').empty();
+
+                    // 요소를 생성합니다.
+                    data.results.forEach(function (item) {
+                        // 변수를 선언합니다.
+                        var view = new ItemView({
+                            model: new Backbone.Model(item)
+                        });
+
+                        // 화면에 반영합니다.
+                        view.render().$el.appendTo(this.$('#tweet-container'));
+                    }.bind(this));
+                }.bind(this));
+
+                // 리턴합니다.
+                return this;
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var view = new MainView();
+            view.render();
+        });
+    </script>
+</head>
+<body>
+    <div id="main-container" class="container">
+        <h1>Tweeter</h1>
+        <form class="form-inline">
+            <input type="text" />
+            <input type="submit" class="btn" value="find" />
+        </form>
+        <hr />
+        <div id="tweet-container">
+
+        </div>
+    </div>
+</body>
+</html>

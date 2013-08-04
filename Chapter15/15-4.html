@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Angular.js</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="angular.js"></script>
+    <script>
+        function basicController($scope, $http) {
+            $http({
+                method: 'GET',
+                url: 'HTMLPage.html'
+            }).success(function (data, status) {
+                $scope.data = data;
+            });
+        }
+    </script>
+</head>
+<body class="container">
+    <div ng-controller="basicController">
+    </div>
+</body>
+</html>

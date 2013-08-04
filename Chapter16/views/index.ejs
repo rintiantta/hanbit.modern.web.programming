@@ -1,0 +1,295 @@
+﻿<!DOCTYPE html>
+<html ng-app="social">
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <link rel="stylesheet" href="bootstrap.css" />
+    <link rel="stylesheet" href="bootstrap-responsive.css" />
+    <style>
+        @media (min-width: 980px) {
+            body {
+                padding-top: 45px;
+            }
+        }
+    </style>
+    <script src="angular.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
+    <script src="bootstrap.js"></script>
+    <script src="angular.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        Number.prototype.toDate = function () { return new Date(this); };
+        Date.prototype.format = function () {
+            var output = '';
+            output += this.getFullYear() + '년 ';
+            output += (this.getMonth() + 1) + '월 ';
+            output += this.getDate() + '일 ';
+            output += this.getHours() + '시 ';
+            output += this.getMinutes() + '분';
+            return output;
+        }
+    </script>
+    <script>
+        // 모듈을 생성합니다.
+        var social = angular.module('social', [], function ($routeProvider) {
+            // Route - Feeds
+            $routeProvider.when('/', {
+                templateUrl: 'feeds.html',
+                controller: FeedsController
+            });
+
+            // Route - Friends
+            $routeProvider.when('/friends', {
+                templateUrl: 'friends.html',
+                controller: FriendsController
+            });
+
+            // Route - Friends Detail :id
+            $routeProvider.when('/friends/:id', {
+                templateUrl: 'detail.html',
+                controller: FriendsDetailController
+            });
+
+            // Route - Other
+            $routeProvider.otherwise({
+                redirectTo: '/'
+            });
+        });
+    </script>
+    <script>
+        // 변수를 선언합니다.
+        var socketCallback = function () { };
+
+        // 소켓을 연결합니다.
+        var socket = io.connect();
+        socket.on('message', function (data) {
+            socketCallback(data);
+        });
+
+        //$socket 팩토리를 생성합니다.
+        social.factory('$socket', function ($rootScope) {
+            return {
+                onPush: function (callback) {
+                    socketCallback = function (receive) {
+                        callback(receive);
+                        $rootScope.$apply();
+                    };
+                }
+            }
+        });
+    </script>
+    <script>
+        // 변수를 선언합니다.
+        var scrollCallback = function () { };
+        var scroll = function () {
+            var scrollHeight = $(window).scrollTop() + $(window).height();
+            var documentHeight = $(document).height();
+
+            if (scrollHeight > documentHeight - 200) {
+                console.log('엔두');
+                scrollCallback();
+                $(window).off('scroll', scroll);
+            }
+        };
+
+        // 스크롤 이벤트를 연결합니다.
+        $(window).on('scroll', scroll);
+
+        // $scroll 팩토리를 생성합니다.
+        social.factory('$scroll', function ($rootScope) {
+            return {
+                infinity: function (callback) {
+                    scrollCallback = function () {
+                        callback();
+                        $rootScope.$apply();
+                    };
+                },
+                restart: function (callback) {
+                    console.log('restart')
+                    $(window).on('scroll', scroll);
+                }
+            }
+        });
+    </script>
+    <script>
+        function FeedsController($scope, $timeout, $http, $socket, $scroll) {
+            // 변수를 선언합니다.
+            var time = new Date().getTime();
+            
+            // Angular.js 변수를 선언합니다.
+            $scope.status = '';
+
+            // 이벤트
+            $scope.onStatusSubmit = function () {
+                // 웹 요청을 수행합니다.
+                $http.post('/posts', {
+                    status: $scope.status
+                }).success(function (data, status) {
+                    $scope.status = '';
+                });
+                $timeout(function () {
+                    // 로딩 메시지를 보여줍니다.
+                    $scope.status = '서버로 데이터를 전송합니다.';
+                });
+            }
+
+            $scope.onReply = function (post) {
+                $http.post('/replies/' + post._id, {
+                    status: post.content
+                }).success(function (data, status) {
+                    post.content = '';
+                });
+            };
+
+            // 웹 요청을 수행합니다.
+            $http.get('/posts?dummy=' + Date.now()).success(function (data, staus) {
+                // 데이터를 추가합니다.
+                $scope.posts = data;
+
+                // 마지막 자료의 시간을 저장합니다.
+                if (data.length != 0) {
+                    time = data[data.length - 1].regdate;
+                }
+            })
+
+            // 소켓 이벤트를 연결합니다.
+            $socket.onPush(function (data) {
+                if (data.code == 3) {
+                    // 새 글을 생성했습니다.
+                    $scope.posts.unshift(data.data);
+                    $scope.status = ''
+                } else if (data.code == 4) {
+                    // 새 댓글을 생성했습니다.
+                    $.each($scope.posts, function (index, item) {
+                        if (item._id == data.target) {
+                            item.replies.push(data.data);
+                        }
+                    });
+                }
+            });
+
+            // 스크롤 이벤트를 연결합니다.
+            $scroll.infinity(function () {
+                $http.get('/posts?time=' + time + '&dummy=' + Date.now()).success(function (data, staus) {
+                    if (data.length != 0) {
+                        $.each(data, function (index, item) {
+                            $scope.posts.push(item);
+                        });
+                        $scroll.restart();
+
+                        // 마지막 자료의 시간을 저장합니다.
+                        time = data[data.length - 1].regdate;
+                    }
+                })
+            });
+        }
+    </script>
+    <script>
+        function FriendsDetailController($scope, $routeParams, $http, $scroll) {
+            // 변수를 선언합니다.
+            var id = $routeParams.id;
+
+            // 웹 요청을 수행합니다.
+            $http.get('/postsOf/' + id + '?dummy=' + Date.now()).success(function (data, staus) {
+                // 데이터를 추가합니다.
+                $scope.posts = data;
+
+                // 마지막 자료의 시간을 저장합니다.
+                if (data.length != 0) {
+                    time = data[data.length - 1].regdate;
+                }
+            });
+
+            // 스크롤 이벤트를 연결합니다.
+            $scroll.infinity(function () {
+                $http.get('/postsOf/' + id + '?time=' + time + '&dummy=' + Date.now()).success(function (data, staus) {
+                    if (data.length != 0) {
+                        $.each(data, function (index, item) {
+                            $scope.posts.push(item);
+                        });
+                        $scroll.restart();
+
+                        // 마지막 자료의 시간을 저장합니다.
+                        time = data[data.length - 1].regdate;
+                    }
+                })
+            });
+        }
+    </script>
+    <script>
+        function FriendsController($scope, $http) {
+            $scope.onSearch = function () {
+                var target = $scope.query;
+                $http.get('/search/' + target).success(function (data, status) {
+                    $scope.acceptFriends = data.acceptFriends;
+                    $scope.requestFriends = data.requestFriends;
+                    $scope.pendingFriends = data.pendingFriends;
+                    $scope.other = data.other;
+                });
+            };
+
+            $scope.onRequestFriend = function (user) {
+                $http.get('/friends/request/' + user._id).success(function (data, status) {
+                    alert('친구 요청을 수행했습니다.');
+                    location.hash = '#/';
+                });
+            };
+
+            $scope.onAcceptFriend = function (user) {
+                $http.get('/friends/request/' + user._id).success(function (data, status) {
+                    alert('친구가 되었습니다.');
+                    location.hash = '#/';
+                });
+            };
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="navbar navbar-fixed-top navbar-inverse">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#/">Social Node</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="#/feeds">
+                                    <i class="icon-home icon-white"></i>
+                                    <span>Home</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#/friends" role="button" data-toggle="modal">
+                                    <i class="icon-pencil icon-white"></i>
+                                    <span>Friends</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav pull-right">
+                            <li>
+                                <a href="/logout">
+                                    <span>Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="span3 hidden-phone">
+
+            </div>
+            <div class="span9">
+                <div ng-view></div>
+            </div>
+        </div>
+</body>
+</html>

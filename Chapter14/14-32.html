@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Knockout Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="knockout-2.2.0.js"></script>
+</head>
+<body class="container">
+    <!-- 입력 양식 -->
+    <div class="input-prepend">
+        <span class="add-on">최소</span>
+        <input type="text" data-bind="value:limitMin" />
+    </div>
+    <div class="input-prepend">
+        <span class="add-on">최대</span>
+        <input type="text" data-bind="value:limitMax" />
+    </div>
+    <!-- 요소 -->
+    <div data-bind="foreach:products">
+        <div data-bind="if: $parent.limitMin() < price && price < $parent.limitMax()">
+            <h2 data-bind="text:name"></h2>
+            <p data-bind="text:price + '원'"></p>
+        </div>
+    </div>
+    <!-- 스크립트 -->
+    <script>
+        // 바인딩합니다.
+        ko.applyBindings({
+            limitMin: ko.observable(Number.MIN_VALUE),
+            limitMax: ko.observable(Number.MAX_VALUE),
+            products: ko.observableArray([{
+                name: '핫세븐', price: 800
+            }, {
+                name: '블루불', price: 2000,
+            }, {
+                name: '번 익스텐스', price: 600,
+            }, {
+                name: '바캉스', price: 300,
+            }])
+        });
+    </script>
+</body>
+</html>

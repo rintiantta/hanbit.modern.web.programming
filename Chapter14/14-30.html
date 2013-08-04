@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Knockout Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="knockout-2.2.0.js"></script>
+</head>
+<body class="container">
+    <div data-bind="foreach:products">
+        <div data-bind="style: { color: price < 1000 ? 'blue' : 'red' }">
+            <h2 data-bind="text:name"></h2>
+            <p data-bind="text:price + '원'"></p>
+            <p data-bind="text:description"></p>
+        </div>
+    </div>
+    <script>
+        // 바인딩합니다.
+        ko.applyBindings({
+            products: ko.observableArray([{
+                name: '핫세븐',
+                price: '800',
+                description: 'Lorem ipsum dolor sit amet'
+            }, {
+                name: '블루불',
+                price: '2000',
+                description: 'Lorem ipsum dolor sit amet'
+            }, {
+                name: '번 익스텐스',
+                price: '600',
+                description: 'Lorem ipsum dolor sit amet'
+            }, {
+                name: '바캉스',
+                price: '300',
+                description: 'Lorem ipsum dolor sit amet'
+            }])
+        });
+    </script>
+</body>
+</html>

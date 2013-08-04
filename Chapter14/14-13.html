@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Knockout Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="knockout-2.2.0.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+            ko.applyBindings({
+                title: ko.observable('Students')
+            });
+        });
+    </script>
+</head>
+<body class="container">
+    <input data-bind="value:title" />
+    <h2 data-bind="text:title"></h2>
+</body>
+</html>

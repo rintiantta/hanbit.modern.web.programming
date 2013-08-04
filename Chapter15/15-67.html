@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html ng-app="custom">
+<head>
+    <title>Directives</title>
+    <script src="angular.min.js"></script>
+    <script>
+        var app = angular.module('custom', []);
+        app.directive('customTimer', function ($http) {
+            return function (scope, element, attrs) {
+                alert(attrs.customTimer);
+                alert(attrs.customData);
+                alert(attrs.other);
+            };
+        });
+    </script>
+</head>
+<body>
+    <h1 custom-timer="model" custom-data="CustomData" data-other="OtherData"></h1>
+</body>
+</html>

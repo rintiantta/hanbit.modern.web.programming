@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Backbone.js Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+    <script id="template" type="text/template">
+        <h1><%= title %></h1>
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Backbone.View 생성자 함수를 상속합니다.
+            var ArticleView = Backbone.View.extend({
+                tagName: 'section',
+                template: _.template($('#template').html()),
+                render: function () {
+                    // 출력합니다.
+                    this.$el.html(this.template(this.model.toJSON()));
+                    // 리턴합니다.
+                    return this;
+                }
+            });
+
+            // ArticleView 객체를 생성합니다.
+            var view = new ArticleView({
+                model: new Backbone.Model({
+                    title: 'Backbone.js'
+                })
+            });
+
+            // 화면에 출력합니다.
+            view.render().$el.appendTo('body');
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

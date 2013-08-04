@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html ng-app="custom">
+<head>
+    <title>Directives</title>
+    <script src="angular.min.js"></script>
+    <script>
+        var app = angular.module('custom', []);
+        app.directive('customTimer', function ($http) {
+            return function (scope, element, attrs) {
+                // 타이머 생성
+                var timerId = setInterval(function () {
+                    element.html(new Date().toString());
+                }, 1000);
+                element.bind('$destroy', function () {
+                    clearInterval(timerId);
+                });
+                // 초기 시간 입력
+                element.html(new Date().toString());
+            };
+        });
+    </script>
+</head>
+<body>
+    <h1 custom-timer="model" custom-data="CustomData" data-other="OtherData"></h1>
+</body>
+</html>

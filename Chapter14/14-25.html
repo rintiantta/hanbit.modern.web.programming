@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Knockout Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="knockout-2.2.0.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+            function StudentsViewModel() {
+                this.title = 'Students';
+                this.students = ko.observableArray([{
+                    id: 1,
+                    name: ko.observable('Insung'),
+                    score: ko.observable(4.0)
+                }, {
+                    id: 2,
+                    name: ko.observable('Hajin'),
+                    score: ko.observable(4.5)
+                }]);
+                this.average = ko.computed(function () {
+                    var students = this.students();
+                    var output = 0;
+                    ko.utils.arrayForEach(students, function (item) {
+                        output += Number(item.score());
+                    });
+                    return output / students.length;
+                }, this);
+                this.submit = function () {
+                    // 변수를 선언합니다.
+                    var input = document.querySelector('input');
+                    var name = input.value;
+
+                    // 데이터를 추가합니다.
+                    this.students.push({
+                        id: this.students().length + 1,
+                        name: ko.observable(name),
+                        score: ko.observable(0.0)
+                    });
+
+                    // 초기화합니다.
+                    input.value = '';
+                };
+            }
+
+            ko.applyBindings(new StudentsViewModel());
+        });
+    </script>
+</head>
+<body class="container">
+    <h1 data-bind="text:title"></h1>
+    <form class="form-inline" data-bind="event: { submit: submit, click: click }">
+        <div class="input-append">
+            <input name="name" type="text">
+            <div class="btn-group">
+                <input type="submit" class="btn" value="Add" />
+            </div>
+        </div>
+    </form>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach:students">
+            <tr>
+                <td data-bind="text:id"></td>
+                <td data-bind="text:name"></td>
+                <td><input type="number" data-bind="value:score" /></td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Average: <span data-bind="text:average"></span></h2>    
+</body>
+</html>

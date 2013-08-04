@@ -1,0 +1,327 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Backbone.js Todo</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+    <!-- 로그인 템플릿 -->
+    <script id="login-template" type="text/template">
+        <div class="container">
+            <h1>Login</h1>
+            <form>
+                <label>Username</label>
+                <input id="login" type="text" />
+                <label>Password</label>
+                <input id="password" type="password" />
+                <br />
+                <input type="submit" class="btn btn-primary" value="Login" />
+                <a class="btn" href="#register">Register</a>
+            </form>
+        </div>
+    </script>
+    <!-- 가입 템플릿 -->
+    <script id="register-template" type="text/template">
+        <div class="container">
+            <h1>Register</h1>
+            <form>
+                <label>Username</label>
+                <input id="login" type="text" />
+                <label>Password</label>
+                <input id="password" type="password" />
+                <label>Confirm Password</label>
+                <input id="confirm-password" type="password" /><br />
+                <br />
+                <input type="submit" class="btn btn-primary" value="Sign up" />
+                <a class="btn" href="#login">Login</a>
+            </form>
+        </div>
+    </script>
+    <!-- 메인 페이지 템플릿 -->
+    <script id="main-template" type="text/template">
+        <div class="container">
+            <a id="logout" class="logout btn-link pull-right">Logout</a>
+            <h1>Todos</h1>
+            <ul id="todos" class="unstyled">
+            </ul>
+            <form id="item-form" class="form-inline">
+                <input id="title" type="text" />
+                <button class="btn btn-success">Add</button>
+            </form>
+            <p><a id="remove-btn" class="btn btn-danger">Remove items</a></p>
+        </div>
+    </script>
+    <!-- 아이템 템플릿 -->
+　　<script id="item-template" type="text/template">
+　      <label class="checkbox">
+            <% if(completed) { %>
+            <input type="checkbox" checked="checked" style="opacity: 0.2" />
+            <% } else {%>
+            <input type="checkbox" />
+            <% { %>
+           <span><%= title %></span>
+       </label>
+　　</script>
+    <!-- Model 객체를 생성합니다. -->
+    <script>
+        // 사용자 자원
+        var User = Backbone.Model.extend({
+            urlRoot: '/users',
+            dummy: function () {
+                this.set('dummy', new Date().getTime());
+                return this;
+            },
+            me: function (success, error) {
+                $.ajax(this.urlRoot + '/me', {
+                    type: 'GET',
+                    success: function (a, b, c) { success(a, b, c); },
+                    error: function (a, b, c) { error(a, b, c); }
+                });
+            },
+            login: function (success, error) {
+                $.ajax(this.urlRoot + '/login', {
+                    type: 'POST',
+                    data: this.dummy().toJSON(),
+                    success: function (a, b, c) { success(a, b, c); },
+                    error: function (a, b, c) { error(a, b, c); }
+                });
+            },
+            register: function (success, error) {
+                $.ajax(this.urlRoot, {
+                    type: 'POST',
+                    data: this.dummy().toJSON(),
+                    success: function (a, b, c) { success(a, b, c); },
+                    error: function (a, b, c) { error(a, b, c); }
+                });
+            },
+            logout: function (success, error) {
+                $.ajax(this.urlRoot + '/logout', {
+                    type: 'GET',
+                    success: function (a, b, c) { success(a, b, c); },
+                    error: function (a, b, c) { error(a, b, c); }
+                });
+            }
+        });
+
+        // 할 일 자원
+        var Todo = Backbone.Model.extend({
+            idAttribute: '_id'
+        });
+
+        var Todos = Backbone.Collection.extend({
+            url: '/todos',
+            model: Todo
+        });
+    </script>
+    <!-- View 객체를 생성합니다. -->
+    <script>
+        // 가입 뷰
+        var RegisterView = Backbone.View.extend({
+            el: '#main-container',
+            template: _.template($('#register-template').html()),
+            initialize: function () {
+                this.render();
+            },
+            render: function () {
+                this.$el.html(this.template());
+            },
+            events: { 'submit form': 'register' },
+            register: function (event) {
+                // 로그인
+                new User({
+                    login: this.$('#login').val(),
+                    password: this.$('#password').val()
+                }).register(function () {
+                    // 가입 성공
+                    this.undelegateEvents();
+                    this.remove();
+                    location.hash = '#login';
+                }.bind(this), function () {
+                    // 가입 실패
+                    $('#login').val('');
+                    $('#password').val('');
+                    $('#password-confirm').val('');
+                    alert('가입에 실패했습니다.');
+                });
+
+                // 기본 이벤트 제거
+                event.preventDefault();
+            }
+        });
+        // 로그인 뷰
+        var LoginView = Backbone.View.extend({
+            el: '#main-container',
+            template: _.template($('#login-template').html()),
+            initialize: function () {
+                this.render();
+            },
+            render: function () {
+                this.$el.html(this.template(this.model));
+            },
+            events: { 'submit form': 'login' },
+            login: function (event) {
+                // 로그인
+                new User({
+                    login: this.$('#login').val(),
+                    password: this.$('#password').val()
+                }).login(function () {
+                    // 로그인 성공
+                    this.undelegateEvents();
+                    this.$el.removeData().unbind();
+                    location.hash = 'main';
+                }.bind(this), function () {
+                    // 로그인 실패
+                    $('#login').val('');
+                    $('#password').val('');
+                    alert('로그인에 실패했습니다.');
+                });
+
+                // 기본 이벤트 제거
+                event.preventDefault();
+            }
+        });
+        // 메인 뷰
+        var MainView = Backbone.View.extend({
+            el: '#main-container',
+            template: _.template($('#main-template').html()),
+            initialize: function () {
+                // 컬렉션을 생성하고 이벤트를 연결합니다.
+                this.todos = new Todos();
+                this.todos.bind('reset', this.reset, this);
+                this.todos.bind('add', this.add, this);
+                this.todos.fetch();
+
+                // 출력합니다.
+                this.render();
+            },
+            render: function () {
+                this.$el.html(this.template());
+            },
+            reset: function () {
+                this.$('ul').empty();
+                this.todos.forEach(function (item) {
+                    new ItemView({
+                        model: item
+                    }).$el.appendTo('ul');
+                });
+            },
+            add: function (item) {
+                new ItemView({
+                    model: item
+                }).$el.appendTo('ul');
+            },
+            events: {
+                'click #logout': 'logout',
+                'submit #item-form': 'submit',
+                'click #remove-btn': 'remove',
+            },
+            logout: function () {
+                new User().logout(function () {
+                    this.undelegateEvents();
+                    this.$el.removeData().unbind();
+                    location.hash = '#login';
+                }.bind(this));
+            },
+            submit: function (event) {
+                // 데이터 추가
+                this.todos.create(new Todo({
+                    title: this.$('#title').val(),
+                    completed: false
+                }));
+
+                // 기본 이벤트 제거
+                event.preventDefault();
+            },
+            remove: function () {
+                for (var i = this.todos.length - 1; i >= 0; i--) {
+                    var item = this.todos.at(i);
+                    if (item.get('completed')) {
+                        item.destroy();
+                    }
+                }
+            }
+        });
+        // 할 일 요소 뷰
+        var ItemView = Backbone.View.extend({
+            tagName: 'li',
+            template: _.template($('#item-template').html()),
+            initialize: function () {
+                this.model.bind('change:completed', this.changeCompleted, this);
+                this.model.bind('destroy', this.destroy, this);
+                this.render();
+            },
+            render: function () {
+                this.$el.html(this.template(this.model.toJSON()));
+            },
+            changeCompleted: function () {
+                this.model.save('completed', this.model.get('completed'), {
+                    complete: function () {
+                        if (this.model.get('completed')) {
+                            this.$el.css('opacity', 0.2);
+                        } else {
+                            this.$el.css('opacity', 1.0);
+                        }
+                    }.bind(this)
+                });
+            },
+            destroy: function () {
+                this.undelegateEvents();
+                this.$el.removeData().unbind();
+                this.remove()
+            },
+            events: { 'change input': 'check' },
+            check: function () {
+                this.model.set('completed', this.$('input').prop('checked'));
+            }
+        });
+    </script>
+    <!-- 컨트롤러를 생성합니다. -->
+    <script>
+        var RootRouter = Backbone.Router.extend({
+            routes: {
+                'register': 'register',
+                'login': 'login',
+                'main': 'main'
+            },
+            register: function () {
+                // 로그인을 확인합니다.
+                new User().me(function () {
+                    location.hash = 'main';
+                }, function () {
+                    new RegisterView();
+                });
+            },
+            login: function () {
+                // 로그인을 확인합니다.
+                new User().me(function () {
+                    location.hash = 'main';
+                }, function () {
+                    new LoginView();
+                });
+            },
+            main: function () {
+                // 로그인을 확인합니다.
+                new User().me(function () {
+                    new MainView();
+                }, function () {
+                    location.hash = 'login';
+                });
+            }
+        });
+    </script>
+    <!-- 페이지 준비 완료 -->
+    <script>
+        $(document).ready(function () {
+            var router = new RootRouter();
+            Backbone.history.start();
+            location.hash = 'main';
+        });
+    </script>
+</head>
+<body>
+    <div id="main-container">
+
+    </div>
+</body>
+</html>

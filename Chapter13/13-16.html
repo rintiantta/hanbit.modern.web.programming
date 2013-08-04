@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Backbone.js Basic</title>
+    <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+    <script>
+        // 객체를 생성합니다.
+        var rint = {
+            toJSON: function () {
+                return {
+                    name: 'fake JSON',
+                    message: 'toJSON() method'
+                }
+            }
+        };
+
+        // 출력합니다.
+        alert(JSON.stringify(rint, null, 2));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+    xmlns:gap="http://phonegap.com/ns/1.0"
+    id="com.phonegap.rintiantta"
+    versionCode="10" version="2.2.0">
+  <name>PhoneGap Example</name>
+  <description>Example of Books</description>
+  <author email="rintiantta@naver.com">RintIanTta</author>
+  <feature name="http://api.phonegap.com/1.0/camera"/>
+  <feature name="http://api.phonegap.com/1.0/geolocation"/>
+</widget>

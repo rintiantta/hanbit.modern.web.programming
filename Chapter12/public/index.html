@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo List Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="sammy.js"></script>
+    <!-- 페이지 라우트 -->
+    <script>
+        var app = Sammy(function () {
+            var checkLogin = function (successCallback, failCallback) {
+                $.ajax('/users/me', {
+                    data: { dummy: new Date().getTime() },
+                    success: function (xhr, result) {
+                        successCallback();
+                    },
+                    error: function () {
+                        failCallback();
+                    }
+                });
+            };
+
+            this.get('#login', function () {
+                checkLogin(function () {
+                    // 로그인되어 있음
+                    location.hash = 'main';
+                }, function () {
+                    // 변수를 선언합니다.
+                    var template = $('#login-template').html();
+
+                    // 화면에 출력합니다.
+                    $(document.body).html(template);
+
+                    // 이벤트를 연결합니다.
+                    $('form').submit(function (event) {
+                        // 변수를 선언합니다.
+                        var login = $('#login').val();
+                        var password = $('#password').val();
+
+                        // 로그인을 수행합니다.
+                        $.ajax('/users/login', {
+                            type: 'POST',
+                            data: {
+                                login: login,
+                                password: password,
+                                dummy: new Date().getTime()
+                            },
+                            success: function () {
+                                // 로그인 성공
+                                location.hash = 'main';
+                            },
+                            error: function () {
+                                // 로그인 실패
+                                $('#login').val('');
+                                $('#password').val('');
+                                alert('로그인에 실패했습니다.');
+                            }
+                        });
+
+                        // 기본 이벤트를 제거합니다.
+                        event.preventDefault();
+                    });
+                });
+            });
+
+            this.get('#register', function () {
+                checkLogin(function () {
+                    // 로그인되어 있음
+                    location.hash = 'main';
+                }, function () {
+                    // 변수를 선언합니다.
+                    var template = $('#register-template').html();
+
+                    // 화면에 출력합니다.
+                    $(document.body).html(template);
+
+                    // 이벤트를 연결합니다.
+                    $('form').submit(function (event) {
+                        // 변수를 선언합니다.
+                        var login = $('#login').val();
+                        var password = $('#password').val();
+                        var confirm = $('#confirm-password').val();
+
+                        // 가입을 수행합니다.
+                        $.ajax('/users', {
+                            type: 'POST',
+                            data: {
+                                login: login,
+                                password: password,
+                                dummy: new Date().getTime()
+                            },
+                            success: function () {
+                                // 가입 성공
+                                location.hash = 'login';
+                            },
+                            error: function () {
+                                // 가입 실패
+                                $('#login').val('');
+                                $('#password').val('');
+                                $('#confirm-password').val('');
+                                alert('가입에 실패했습니다.');
+                            }
+                        });
+
+                        // 기본 이벤트를 제거합니다.
+                        event.preventDefault();
+                    });
+                });
+            });
+
+            this.get('#main', function () {
+                checkLogin(function () {
+                    // 할 일 목록을 조회합니다.
+                    $.getJSON('/todos', function (json) {
+                        // 기본 템플릿을 출력합니다.
+                        $(document.body).html($('#main-template').html());
+                        $.each(json, function (index, item) {
+                            // 변수를 선언합니다.
+                            var output = '';
+                            output += '<label data-id="' + item._id + 
+                                '" class="checkbox">';
+                            if (item.completed) {
+                                output += '<input type="checkbox" checked="checked" />';
+                            } else {
+                                output += '<input type="checkbox" />';
+                            }
+                            output += '    <span>' + item.title + '</span>';
+                            output += '</label>';
+                            // 화면에 출력합니다.
+                            $(output).css('opacity', item.completed ? 0.5 : '').
+                                appendTo('#todos');
+                        });
+
+                        // 이벤트를 연결합니다.
+                        $('#logout').click(function (event) {
+                            // 로그아웃을 수행합니다.
+                            $.ajax('/users/logout', {
+                                data: { dummy: new Date().getTime() },
+                                complete: function () {
+                                    location.hash = 'login';
+                                }
+                            });
+                            // 기본 이벤트를 제거합니다.
+                            event.preventDefault();
+                        });
+
+                        $('#item-form').submit(function (event) {
+                            // 변수를 선언합니다.
+                            var title = $('#title').val();
+                            // Ajax를 수행합니다.
+                            $.ajax('/todos', {
+                                type: 'POST',
+                                data: {
+                                    title: title,
+                                    dummy: new Date().getTime()
+                                },
+                                success: function (items) {
+                                    // 화면에 문서 객체를 추가합니다.
+                                    var output = '';
+                                    output += '<label data-id="' + items[0]._id + '" class="checkbox">';
+                                    output += '    <input type="checkbox" />';
+                                    output += '    <span>' + items[0].title + '</span>';
+                                    output += '</label>';
+                                    $('#todos').append(output);
+
+                                    // 입력 양식을 비웁니다.
+                                    $('#title').val('');
+                                },
+                                error: function () {
+                                    alert('오류가 발생했습니다.');
+                                }
+                            });
+                            // 기본 이벤트를 제거합니다.
+                            event.preventDefault();
+                        });
+
+                        $('ul').on('change', 'input[type="checkbox"]', function () {
+                            // 변수를 추출합니다.
+                            var id = $(this).parent().attr('data-id');
+                            var completed = $(this).prop('checked');
+
+                            // 색상을 변경합니다.
+                            if (completed) {
+                                $(this).parent().css('opacity', 0.5);
+                            } else {
+                                $(this).parent().css('opacity', '');
+                            }
+
+                            // Ajax 요청을 수행합니다.
+                            $.ajax('/todos/' + id, {
+                                type: 'PUT',
+                                data: {
+                                    completed: completed,
+                                    dummy: new Date().getTime()
+                                }
+                            });
+                        });
+                        $('#remove-btn').click(function (event) {
+                            // 데이터를 제거합니다.
+                            $(':checked').each(function () {
+                                // 변수를 선언합니다.
+                                var id = $(this).parent().attr('data-id');
+                                // Ajax 요청을 수행합니다.
+                                $.ajax('/todos/' + id, {
+                                    type: 'DELETE',
+                                    data: { dummy: new Date().getTime() },
+                                    success: function () {
+                                        $(this).parent().remove();
+                                    }.bind(this)
+                                });
+                            })
+                            // 기본 이벤트를 제거합니다.
+                            event.preventDefault();
+                        });
+                    });
+                }, function () {
+                    // 로그인되어 있지 않음
+                    location.hash = 'login';
+                });
+            });
+        });
+    </script>
+    <!-- 페이지 준비 완료 -->
+    <script>
+        $(document).ready(function () {
+            app.run('#login');
+        });
+    </script>
+    <!-- 로그인 템플릿 -->
+    <script id="login-template" type="text/template">
+        <div class="container">
+            <h1>Login</h1>
+            <form>
+                <label>Username</label>
+                <input id="login" type="text" />
+                <label>Password</label>
+                <input id="password" type="password" />
+                <br />
+                <input type="submit" class="btn btn-primary" value="Login" />
+                <a class="btn" href="#register">Register</a>
+            </form>
+        </div>
+    </script>
+    <!-- 가입 템플릿 -->
+    <script id="register-template" type="text/template">
+        <div class="container">
+            <h1>Register</h1>
+            <form>
+                <label>Username</label>
+                <input id="login" type="text" />
+                <label>Password</label>
+                <input id="password" type="password" />
+                <label>Confirm Password</label>
+                <input id="confirm-password" type="password" /><br />
+                < br />
+                <input type="submit" class="btn btn-primary" value="Sign up" />
+                <a class="btn" href="#login">Login</a>
+            </form>
+        </div>
+    </script>
+    <!-- 메인 페이지 템플릿 -->
+    <script id="main-template" type="text/template">
+        <div class="container">
+            <a id="logout" class="logout btn-link pull-right">Logout</a>
+            <h1>Todos</h1>
+            <ul id="todos" class="unstyled">
+            </ul>
+            <form id="item-form" class="form-inline">
+                <input id="title" type="text" />
+                <button class="btn btn-success">Add</button>
+            </form>
+            < p><a id="remove-btn" class="btn btn-danger">Remove items</a></p>
+        </div>
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Backbone.js Basic</title>
+    <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+    <script>
+        // 모델을 상속합니다.
+        var Person = Backbone.Model.extend({
+            defaults: {
+                name: '',
+                region: ''
+            },
+            initialize: function () {
+                this.bind('change:name', this.changeName);
+                this.bind('change:region', this.changeRegion);
+            },
+            changeName: function () { },
+            changeRegion: function () { }
+        });
+
+        // 객체를 생성합니다.
+        var person = new Person({
+            name: '윤인성',
+            region: '서울특별시'
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

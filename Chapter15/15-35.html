@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Angular.js</title>
+    <script src="angular.js"></script>
+    <script>
+        function basicController($scope, $http) {
+            $http.get('HTMLPage.html').success(function (data, status) {
+                console.log(data);
+            });
+        }
+    </script>
+</head>
+<body class="container">
+    <div ng-controller="basicController"></div>
+</body>
+</html>

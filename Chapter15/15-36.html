@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Angular.js</title>
+    <script src="angular.js"></script>
+    <script>
+        function basicController($scope, $http) {
+            $http.get('HTMLPage.html', {
+                dummy: new Date().getTime()
+            }).success(function (data, status) {
+                // 성공
+            }).error(function (data, status) {
+                // 실패
+            });
+        }
+    </script>
+</head>
+<body class="container">
+    <div ng-controller="basicController"></div>
+</body>
+</html>

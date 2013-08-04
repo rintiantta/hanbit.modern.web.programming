@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Knockout Editor</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="knockout-2.2.0.js"></script>
+    <script src="src/ace.js"></script>
+    <script>
+        ko.bindingHandlers.editor = {
+            init: function (element, valueAccessor) {
+                // 변수를 선언합니다.
+                var value = valueAccessor();
+
+                // 스타일을 변경합니다.
+                $(element).css('height', value.height);
+
+                // 텍스트 에디터를 생성합니다.
+                var edit = ace.edit(element);
+                edit.setValue(value.text());
+                edit.getSession().setMode('ace/mode/' + value.type);
+                edit.on('change', function () {
+                    value.text(edit.getValue());
+                    value.change && value.change();
+                });
+
+                // 에디터를 저장합니다.
+                $(element).data('edit', edit);
+            },
+            update: function (element, valueAccessor) { }
+        };
+    </script>
+    <script>
+        $(document).ready(function () {
+            ko.applyBindings(window.viewModel = {
+                js: ko.observable(''),
+                css: ko.observable(''),
+                html: ko.observable(''),
+                change: function () {
+                    var js = window.viewModel.js();
+                    var css = window.viewModel.css();
+                    var html = window.viewModel.html();
+
+                    var output = '';
+                    output += '<style>' + css + '</style>';
+                    output += html;
+                    output += '<script>' + js + '<\/script>';
+
+                    var content = document.getElementById('result').contentWindow;
+                    content.document.open();
+                    content.document.write(output);
+                    content.document.close();
+                }
+            });
+        });
+    </script>
+</head>
+<body class="container">
+    <h1>Web IDE</h1>
+    <div class="row">
+        <div class="span6">
+            <h2>Javascript</h2>
+            <div data-bind="editor:{
+                type:'javascript',height:150,text:js,change:change
+            }"></div>
+            <h2>CSS</h2>
+            <div data-bind="editor:{
+                type:'css',height:150,text:css,change:change
+            }"></div>
+            <h2>HTML</h2>
+            <div data-bind="editor: {
+                type:'html',height:150,text:html,change:change
+            }"></div>
+        </div>
+        <div class="span6">
+            <h2>Result</h2>
+            <iframe id="result" width="100%" height="570"></iframe>
+        </div>
+    </div>
+</body>
+</html>

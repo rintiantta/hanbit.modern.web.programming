@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Knockout Basic</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <script src="knockout-2.2.0.js"></script>
+    <script>
+        // 컬렉션을 선언합니다.
+        var people = ko.observableArray([{
+            name: ko.observable('윤인성'),
+            region: ko.observable('서울특별시 강서구')
+        }, {
+            name: ko.observable('연하진'),
+            region: ko.observable('미국 로스엔젤레스 패서디나')
+        }]);
+
+        // 데이터를 추가합니다.
+        people.push({
+            name: ko.observable('윤민아'),
+            region: ko.observable('서울특별시 강서구')
+        });
+
+        // 데이터를 조회합니다.
+        alert(people());
+
+        // 데이터를 삭제합니다.
+        people.remove(people()[0]);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

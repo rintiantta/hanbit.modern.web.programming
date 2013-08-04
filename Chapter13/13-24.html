@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Backbone.js Basic</title>
+    <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+    <script>
+        // 모델을 상속합니다.
+        var Person = Backbone.Model.extend({});
+
+        // 컬렉션을 상속합니다.
+        var People = Backbone.Collection.extend({
+            model: Person
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
