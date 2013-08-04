@@ -3,13 +3,16 @@
 <head>
     <title>Chapter 2</title>
     <script>
-        var clone = function (object) {
-            var output = {};
-            for (var key in object) {
-                output[key] = object[key];
-            }
-            return output;
-        };
+        // 참조 복사
+        var a = new Number(10);
+        var b = a;
+
+        // 값을 변경합니다.
+        a.number = 10;
+
+        // 출력합니다.
+        alert('a.number: ' + a.number);
+        alert('b.number: ' + b.number);
     </script>
 </head>
 <body>

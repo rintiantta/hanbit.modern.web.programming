@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chapter 2</title>
+    <title>Function</title>
 </head>
 <body>
-    <textarea id="textarea"></textarea>
+    <h1 id="header">Start Timer : </h1>
     <script>
         // 변수를 선언합니다.
-        var ENTER = 13;
-        var textarea = document.getElementById('textarea');
+        var header = document.getElementById('header');
 
-        // 이벤트를 연결합니다.
-        textarea.onkeypress = function (event) {
-            if (event.keyCode == ENTER && event.shiftKey == false) {
-                // 내부 글자를 빈 문자열로 대치합니다.
-                this.value = '';
-
-                // 기본 이벤트를 제거합니다.
-                return false;
-            }
+        // 클릭 이벤트를 연결합니다.
+        header.onclick = function () {
+            setInterval(function () {
+                this.innerHTML += '★';
+            }, 1000);
         };
     </script>
 </body>

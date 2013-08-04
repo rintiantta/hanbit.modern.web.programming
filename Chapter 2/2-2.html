@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chapter 2</title>
+    <title>Chapter 2 </title>
     <script>
-        // 변수를 선언합니다.
-        var object = {};
-        var change = function (object) {
-            object.number = 10;
-        };
+        // 참조 복사
+        var a = {};
+        var b = a;
 
-        // 함수를 호출합니다.
-        change(object);
+        // 속성을 변경합니다.
+        a.value = 10;
 
         // 출력합니다.
-        alert(JSON.stringify(object));
+        alert('a: ' + JSON.stringify(a));
+        alert('b: ' + JSON.stringify(b));
     </script>
 </head>
 <body>

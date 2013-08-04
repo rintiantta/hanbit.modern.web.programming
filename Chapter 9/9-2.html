@@ -1,14 +1,22 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Chapter 9</title>
+    <title>User Media Basic</title>
     <script src="prefix.js"></script>
+    <!-- 프리픽스를 제거합니다. -->
     <script>
-        removePrefix(window, 'AudioContext');
+        removePrefix(navigator, 'getUserMedia');
     </script>
     <script>
-        // 변수를 선언합니다.
-        var context = new AudioContext();
+        window.addEventListener('load', function () {
+            // 마이크에 접근합니다.
+            navigator.getUserMedia({
+                video: true,
+                audio: true
+            }, function (stream) {
+
+            });
+        });
     </script>
 </head>
 <body>

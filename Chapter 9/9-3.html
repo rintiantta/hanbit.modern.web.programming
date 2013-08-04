@@ -1,26 +1,29 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Chapter 9</title>
+    <title>User Media Basic</title>
     <script src="prefix.js"></script>
+    <!-- 프리픽스를 제거합니다. -->
     <script>
-        removePrefix(window, 'AudioContext');
+        removePrefix(navigator, 'getUserMedia');
     </script>
     <script>
-        // 변수를 선언합니다.
-        var context = new AudioContext();
-        var audioProcess = function (buffer) {
+        window.addEventListener('load', function () {
+            // 마이크에 접근합니다.
+            navigator.getUserMedia({
+                video: true,
+                audio: true
+            }, function (stream) {
+                // 웹캠을 설정합니다.
+                var source = URL.createObjectURL(stream);
+                var video = document.createElement('video');
+                video.src = source;
+                video.autoplay = true;
 
-        };
-
-        // 음악 파일을 가져옵니다.
-        var request = new XMLHttpRequest();
-        request.responseType = 'arraybuffer';
-        request.onload = function () {
-            context.decodeAudioData(request.response, audioProcess);
-        };
-        request.open('GET', 'Kalimba.mp3', true);
-        request.send();
+                // 화면에 문서 객체를 추가합니다.
+                document.body.appendChild(video);
+            });
+        });
     </script>
 </head>
 <body>

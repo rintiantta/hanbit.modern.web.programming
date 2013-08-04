@@ -2,15 +2,20 @@
 <html>
 <head>
     <title>Chapter 2</title>
+</head>
+<body>
+    <textarea id="textarea"></textarea>
     <script>
-        Object.prototype.iterate = function (callback) {
-            for (var key in this) {
-                callback(key, this[key], this);
+        // 변수를 선언합니다.
+        var ENTER = 13;
+        var textarea = document.getElementById('textarea');
+ 
+        // 이벤트를 연결합니다.
+        textarea.onkeypress = function (event) {
+            if (event.keyCode == ENTER && event.shiftKey == false) {
+                this.value = '';
             }
         };
     </script>
-</head>
-<body>
-
 </body>
 </html>

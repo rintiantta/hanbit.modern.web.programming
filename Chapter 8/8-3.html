@@ -1,29 +1,24 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>User Media Basic</title>
+    <title>Request Animation Basic</title>
     <script src="prefix.js"></script>
-    <!-- 프리픽스를 제거합니다. -->
+    <!-- 설정 -->
     <script>
-        removePrefix(navigator, 'getUserMedia');
+        removePrefix(window, 'requestAnimationFrame');
+        removePrefix(window, 'cancelAnimationFrame');
     </script>
     <script>
-        window.addEventListener('load', function () {
-            // 마이크에 접근합니다.
-            navigator.getUserMedia({
-                video: true,
-                audio: true
-            }, function (stream) {
-                // 웹캠을 설정합니다.
-                var source = URL.createObjectURL(stream);
-                var video = document.createElement('video');
-                video.src = source;
-                video.autoplay = true;
+        // animate() 함수 선언
+        var animate = function () {
+            // 애니메이션 본문
+            /* 코드 */
+            // 재귀 요청
+            requestAnimationFrame(animate);
+        };
 
-                // 화면에 문서 객체를 추가합니다.
-                document.body.appendChild(video);
-            });
-        });
+        // animate() 함수 실행
+        requestAnimationFrame(animate);
     </script>
 </head>
 <body>

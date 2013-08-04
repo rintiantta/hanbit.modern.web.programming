@@ -1,37 +1,26 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>stat.js</title>
-    <script src="prefix.js"></script>
-    <script src="Stats.js"></script>
+    <title>Chapter 2</title>
     <script>
-        removePrefix(window, 'requestAnimationFrame');
+        // 변수를 선언합니다.
+        var prefixes = ['webkit', 'ms', 'moz', 'o'];
+
+        // 첫 글자를 대문자로 만드는 함수
+        var capitalize = function (name) {
+            return name.substr(0, 1).toUpperCase() + name.substr(1);
+        };
+
+        // 프리픽스 제거 함수
+        var removePrefix = function (object, name) {
+            // 프리픽스를 제거합니다.
+            prefixes.forEach(function (prefix) {
+                object[name] = object[name] || object[prefix + capitalize(name)];
+            });
+        };
     </script>
 </head>
 <body>
-    <script>
-        // 변수를 선언합니다.
-        var stats = new Stats();
-
-        // 변수를 설정합니다.
-        stats.setMode(0);
-        stats.domElement.style.position = 'absolute';
-        stats.domElement.style.left = '10px';
-        stats.domElement.style.top = '10px';
-
-        // 화면에 추가합니다.
-        document.body.appendChild(stats.domElement);
-
-        // 타이머를 시작합니다.
-        var animate = function () {
-            stats.begin();
-
-            // 애니메이션 코드
-
-            stats.end();
-            requestAnimationFrame(animate);
-        };
-        requestAnimationFrame(animate);
-    </script>
+ 
 </body>
 </html>

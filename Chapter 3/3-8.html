@@ -1,81 +1,41 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Request Animation Basic</title>
+    <title>FullScreen</title>
     <style>
-        body { overflow: hidden; }
+
     </style>
-    <script src="prefix.js"></script>
-    <!-- 설정 -->
-    <script>
-        removePrefix(window, 'requestAnimationFrame');
-        removePrefix(window, 'cancelAnimationFrame');
-    </script>
-    <script>
-        function AnimationObject(options) {
-            this.body = document.createElement('h1');
-            this.body.textContent = '★';
-            this.body.style.position = 'absolute';
-            this.x = options.x || 0;
-            this.y = options.y || 0;
-            this.vx = options.vx || 0;
-            this.vy = options.vy || 0;
-        }
-
-        AnimationObject.prototype.appendTo = function (domElement) {
-            domElement.appendChild(this.body);
-            return this;
-        };
-
-        AnimationObject.prototype.update = function () {
-            this.x += this.vx;
-            this.y += this.vy;
-
-            if (this.x < 0 || width < this.x) {
-                this.vx *= -1;
-            }
-            if (this.y < 0 || height < this.y) {
-                this.vy *= -1;
-            }
-
-            this.body.style.left = this.x + 'px';
-            this.body.style.top = this.y + 'px';
-        };
-    </script>
-    <script>
-        window.addEventListener('load', function () {
-            // 화면 크기를 구합니다.
-            width = window.innerWidth;
-            height = window.innerHeight;
-
-            // 변수를 선언합니다.
-            var objects = [];
-            for (var i = 0; i < 100; i++) {
-                objects.push(new AnimationObject({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    vx: Math.random() * 10 - 5,
-                    vy: Math.random() * 10 - 5
-                }).appendTo(document.body));
-            }
-
-            // animate() 함수 선언
-            var animate = function () {
-                // 애니메이션 본문
-                objects.forEach(function (item) {
-                    item.update();
-                });
-
-                // 재귀 요청
-                requestAnimationFrame(animate);
-            };
-
-            // animate() 함수 실행
-            requestAnimationFrame(animate);
-        });
-    </script>
 </head>
 <body>
-
+    <!-- 요소 -->
+    <img class="fullscreen" src="penguins.jpg" />
+    <div class="fullscreen">
+        <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin et quam luctus, lobortis quam at, porttitor lectus. Nullam condimentum congue velit, sit amet tincidunt est sagittis lacinia. Donec lobortis tellus sed volutpat porttitor. Suspendisse quis interdum eros. Sed ac commodo nibh, a molestie lorem. Aenean et volutpat mauris, id gravida neque. Cras scelerisque, orci id volutpat sodales, arcu tellus facilisis odio, malesuada suscipit felis nisi eu odio. Maecenas sagittis enim sed eros consectetur porttitor. Proin quis ipsum et massa egestas iaculis. Quisque porta tortor vel mauris porttitor blandit. Sed fermentum blandit ligula, eu aliquam quam dictum eu. Etiam dictum viverra neque in facilisis. Nullam adipiscing metus id mattis consectetur.</p>
+    </div>
+    <!-- 스크립트 -->
+    <script>
+        var elements = document.querySelectorAll('.fullscreen');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].onclick = function () {
+                if (this.requestFullscreen) {
+                    // requestFullscreen() 메서드가 있는 경우
+                    this.requestFullscreen();
+                } else if (this.msRequestFullscreen) {
+                    // msRequestFullscreen() 메서드가 있는 경우
+                    this.msRequestFullscreen();
+                } else if (this.webkitRequestFullscreen) {
+                    // webkitRequestFullscreen() 메서드가 있는 경우
+                    this.webkitRequestFullscreen();
+                } else if (this.mozRequestFullscreen) {
+                    // mozRequestFullscreen() 메서드가 있는 경우
+                    this.mozRequestFullscreen();
+                } else if (this.oRequestFullscreen) {
+                    // oRequestFullscreen() 메서드가 있는 경우
+                    this.oRequestFullscreen();
+                }
+            };
+        }
+    </script>
 </body>
 </html>

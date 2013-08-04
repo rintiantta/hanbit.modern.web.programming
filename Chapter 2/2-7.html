@@ -2,26 +2,15 @@
 <html>
 <head>
     <title>Chapter 2</title>
+    <script>
+        var array = [{}, {}];
+        array.forEach(function (item, index) {
+            item.index = index;
+        });
+        alert(JSON.stringify(array));
+    </script>
 </head>
 <body>
-    <textarea id="textarea"></textarea>
-    <script>
-        // 변수를 선언합니다.
-        var ENTER = 13;
-        var textarea = document.getElementById('textarea');
 
-        // 이벤트를 연결합니다.
-        textarea.onkeypress = function (event) {
-            if (event.keyCode == ENTER && event.shiftKey == false) {
-                // 변수를 선언합니다.
-                var _this = this;
-
-                // 타이머 이벤트를 연결합니다.
-                setTimeout(function () {
-                    _this.value = '';
-                }, 0);
-            }
-        };
-    </script>
 </body>
 </html>

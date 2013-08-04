@@ -3,11 +3,18 @@
 <head>
     <title>Chapter 2</title>
     <script>
-        var array = [{}, {}];
-        array.forEach(function (item, index) {
-            item.index = index;
-        });
-        console.log(array);
+        // 변수를 선언합니다.
+        var object = {};
+        var otherObject = object;
+        var change = function (parameterObject) {
+            parameterObject.number = 10;
+        };
+
+        // 함수를 호출합니다.
+        change(otherObject);
+
+        // 출력합니다.
+        alert(JSON.stringify(object));
     </script>
 </head>
 <body>

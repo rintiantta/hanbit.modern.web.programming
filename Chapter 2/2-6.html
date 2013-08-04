@@ -2,20 +2,17 @@
 <html>
 <head>
     <title>Chapter 2</title>
+    <script>
+        var clone = function (object) {
+            var output = {};
+            for (var key in object) {
+                output[key] = object[key];
+            }
+            return output;
+        };
+</script>
 </head>
 <body>
-    <textarea id="textarea"></textarea>
-    <script>
-        // 변수를 선언합니다.
-        var ENTER = 13;
-        var textarea = document.getElementById('textarea');
 
-        // 이벤트를 연결합니다.
-        textarea.onkeypress = function (event) {
-            if (event.keyCode == ENTER && event.shiftKey == false) {
-                this.value = '';
-            }
-        };
-    </script>
 </body>
 </html>

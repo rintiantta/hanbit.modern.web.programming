@@ -2,26 +2,24 @@
 <html>
 <head>
     <title>Chapter 2</title>
-    <script>
-        Object.defineProperties(Object.prototype, {
-            iterate: {
-                value: function (callback) {
-                    for (var key in this) {
-                        callback(key, this[key], this);
-                    }
-                }
-            }
-        });
-
-        ({
-            name: 'rint',
-            hobby: ['Guitar', 'Piano']
-        }).iterate(function (key, item) {
-            console.log(key, item);
-        });
-    </script>
 </head>
 <body>
+    <textarea id="textarea"></textarea>
+    <script>
+        // 변수를 선언합니다.
+        var ENTER = 13;
+        var textarea = document.getElementById('textarea');
+ 
+        // 이벤트를 연결합니다.
+        textarea.onkeypress = function (event) {
+            if (event.keyCode == ENTER && event.shiftKey == false) {
+                // 내부 글자를 빈 문자열로 대치합니다.
+                this.value = '';
 
+                // 기본 이벤트를 제거합니다.
+                return false;
+            }
+        };
+    </script>
 </body>
 </html>

@@ -1,16 +1,48 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>stat.js</title>
-    <script src="prefix.js"></script>
-    <script src="Stats.js"></script>
-    <script>
-        removePrefix(window, 'requestAnimationFrame');
-    </script>
+    <title>FullScreen</title>
+    <style>
+        /* HTML5 문서의 fullscreen 모드 */
+        div.fullscreen:fullscreen { width: 60%; border-radius:10px; }
+        /* 웹 브라우저 제조사의 fullscreen 모드 */
+        div.fullscreen:full-screen { width: 60%; border-radius:10px; }
+        div.fullscreen:-ms-full-screen { width: 60%; border-radius:10px; }
+        div.fullscreen:-webkit-full-screen { width: 60%; border-radius:10px; }
+        div.fullscreen:-moz-full-screen{ width: 60%; border-radius:10px; }
+        div.fullscreen:-o-full-screen{ width: 60%; border-radius:10px; }
+    </style>
 </head>
 <body>
+    <!-- 요소 -->
+    <img class="fullscreen" src="penguins.jpg" />
+    <div class="fullscreen">
+        <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin et quam luctus, lobortis quam at, porttitor lectus. Nullam condimentum congue velit, sit amet tincidunt est sagittis lacinia. Donec lobortis tellus sed volutpat porttitor. Suspendisse quis interdum eros. Sed ac commodo nibh, a molestie lorem. Aenean et volutpat mauris, id gravida neque. Cras scelerisque, orci id volutpat sodales, arcu tellus facilisis odio, malesuada suscipit felis nisi eu odio. Maecenas sagittis enim sed eros consectetur porttitor. Proin quis ipsum et massa egestas iaculis. Quisque porta tortor vel mauris porttitor blandit. Sed fermentum blandit ligula, eu aliquam quam dictum eu. Etiam dictum viverra neque in facilisis. Nullam adipiscing metus id mattis consectetur.</p>
+    </div>
+    <!-- 스크립트 -->
     <script>
-
+        var elements = document.querySelectorAll('.fullscreen');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].onclick = function () {
+                if (this.requestFullscreen) {
+                    // requestFullscreen() 메서드가 있는 경우
+                    this.requestFullscreen();
+                } else if (this.msRequestFullscreen) {
+                    // msRequestFullscreen() 메서드가 있는 경우
+                    this.msRequestFullscreen();
+                } else if (this.webkitRequestFullscreen) {
+                    // webkitRequestFullscreen() 메서드가 있는 경우
+                    this.webkitRequestFullscreen();
+                } else if (this.mozRequestFullscreen) {
+                    // mozRequestFullscreen() 메서드가 있는 경우
+                    this.mozRequestFullscreen();
+                } else if (this.oRequestFullscreen) {
+                    // oRequestFullscreen() 메서드가 있는 경우
+                    this.oRequestFullscreen();
+                }
+            };
+        }
     </script>
 </body>
 </html>

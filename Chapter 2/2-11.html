@@ -4,14 +4,13 @@
     <title>Chapter 2</title>
     <script>
         // 변수를 선언합니다.
-        var object = {
-            name: '윤인성'
+        var header = document.getElementById('header');
+        // 클릭 이벤트를 연결합니다.
+        header.onclick = function () {
+            setInterval(function () {
+                this.innerHTML += '★';
+            }.bind(this), 1000);
         };
- 
-        // setTimeout() 함수를 실행합니다.
-        setTimeout(function (a, b, c) {
-            alert(this.name);
-        }.apply(object, [0, 1, 2]), 0);
     </script>
 </head>
 <body>

@@ -1,20 +1,15 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>tween.js Basic</title>
+    <title>Remove Prefix</title>
     <script src="prefix.js"></script>
-    <script src="tween.js"></script>
-    <!-- 설정 -->
     <script>
-        removePrefix(window, 'requestAnimationFrame');
-        removePrefix(window, 'cancelAnimationFrame');
+        // 프리픽스를 제거합니다.
+        removePrefix(window, 'URL');
+        removePrefix(navigator, 'getUserMedia');
     </script>
 </head>
 <body>
-    <!-- 코드 본문 -->
-    <script>
-        // Tween 객체를 생성합니다.
-        var tween = new TWEEN.Tween({});
-    </script>
+ 
 </body>
 </html>
