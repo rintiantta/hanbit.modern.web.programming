@@ -64,44 +64,5 @@ HTML5부터는 form 태그의 method 속성을 PUT, DELETE로 지정 못합니�
 이렇게 !important 키워드를 적용하면 해결할 수 있습니다.
 
 #오탈자
-##78페이지: 코드 3-9: 1쇄 오류
-출간 전부터 오탈자가....
-
--webkit-full-screen 선택자가 2번이나 들어갔습니다.
-```html
-<style>
-    /* HTML5 문서의 fullscreen 모드 */
-    div.fullscreen:fullscreen { width: 60%; border-radius:10px; }
-    /* 웹 브라우저 제조사의 fullscreen 모드 */
-    div.fullscreen:full-screen { width: 60%; border-radius:10px; }
-    div.fullscreen:-webkit-full-screen { width: 60%; border-radius:10px; }
-    div.fullscreen:-webkit-full-screen { width: 60%; border-radius:10px; }
-    div.fullscreen:-moz-full-screen{ width: 60%; border-radius:10px; }
-    div.fullscreen:-o-full-screen{ width: 60%; border-radius:10px; }
-</style>
-```
-하나를 ms로 변경해주세요. 하지만 변경해도 2013년 08월을 기준으로 IE에서 지원하지 않아서 못 씁니다. 'ㅁ'
-```html
-<style>
-    /* HTML5 문서의 fullscreen 모드 */
-    div.fullscreen:fullscreen { width: 60%; border-radius:10px; }
-    /* 웹 브라우저 제조사의 fullscreen 모드 */
-    div.fullscreen:full-screen { width: 60%; border-radius:10px; }
-    div.fullscreen:-ms-full-screen { width: 60%; border-radius:10px; }
-    div.fullscreen:-webkit-full-screen { width: 60%; border-radius:10px; }
-    div.fullscreen:-moz-full-screen{ width: 60%; border-radius:10px; }
-    div.fullscreen:-o-full-screen{ width: 60%; border-radius:10px; }
-</style>
-```
-
-##294페이지: 코드 13-12: 1쇄 오류
-출간 전부터 오탈자가....
-```javascript
-// 이벤트를 연결합니다: "이벤트:속성" 형태의 문자열을 사용합니다.
-person.bind('change:region', function (model, attr]) {
-    alert(attr + '로 변경합니다.');
-});
-```
-매개 변수 attr 뒤에 ] 기호가 이상하게 들어가 있답니다.
 
 #참고사항
