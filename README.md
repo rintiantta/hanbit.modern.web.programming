@@ -64,5 +64,12 @@ HTML5부터는 form 태그의 method 속성을 PUT, DELETE로 지정 못합니�
 이렇게 !important 키워드를 적용하면 해결할 수 있습니다.
 
 #오탈자
+
+##13장 Todo List
+13장 예제에 크나큰 문제가 있습니다.... 흐흨....
+본문에서 "이것 안 해서 이벤트 관련 문제가 가끔 있습니다."라고 써놓고 그걸 안 했습니다....
+뷰가 변경될 때는 다음과 같이 이전 뷰의 이벤트를 제거해주세요 ;ㅁ; !!
+[https://github.com/rintiantta/hanbit.modern.web.programming/commit/484b326c643ae4b74d84b8b990dc765dea13ae87#diff-c24db2cc69d3278864922a0d47e35b82](변경 내용)
+
 #참고사항
 아직 출간 전인데 왠지 잘못쓴 부분이 잠자다 생각.... apply() 메서드 잘못 쓴듯.... 털썩(물론 한 문장 출현인데...)
