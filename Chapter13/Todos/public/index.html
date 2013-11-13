@@ -135,7 +135,6 @@
                 }).register(function () {
                     // 가입 성공
                     this.undelegateEvents();
-                    this.remove();
                     location.hash = '#login';
                 }.bind(this), function () {
                     // 가입 실패
@@ -289,7 +288,8 @@
                 new User().me(function () {
                     location.hash = 'main';
                 }, function () {
-                    new RegisterView();
+                    if (window.view) { window.view.undelegateEvents() }
+                    window.view = new RegisterView();
                 });
             },
             login: function () {
@@ -297,14 +297,16 @@
                 new User().me(function () {
                     location.hash = 'main';
                 }, function () {
-                    new LoginView();
+                    if (window.view) { window.view.undelegateEvents() }
+                    window.view = new LoginView();
                 });
             },
             main: function () {
                 // 로그인을 확인합니다.
                 new User().me(function () {
-                    new MainView();
+                    window.view = new MainView();
                 }, function () {
+                    this.undelegateEvents();
                     location.hash = 'login';
                 });
             }
