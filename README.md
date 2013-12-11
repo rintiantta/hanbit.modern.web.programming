@@ -44,6 +44,14 @@ $.ajax('http://me2day.net/api/get_posts/' + id + '.json?callback=?', {});
 naver_news 등의 아이디를 찾아야 합니다. [http://me2day.net/me2/people/celebrity/all](http://me2day.net/me2/people/celebrity/all) 공식 사이트에서 아이디를 확인해서 검색해보세요!
 (흐흐허허어헐헝.... 트위터.... OTL)
 
+## Angular.js 변경
+Angular.js가 1.2.X 버전으로 올라가면서 Router 관련 모듈이 분리되었습니다. 'ㅁ'
+사용하실 때에 다음과 같이 별도의 파일을 추가하셔야 합니다! (2013년 12월 11일 업데이트)
+```html
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular-route.js"></script>
+```
+
 #참고 사항
 ## Ajax
 Ajax는 같은 도메인에서 실행해야 적용됩니다!
