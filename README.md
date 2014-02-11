@@ -44,6 +44,9 @@ $.ajax('http://me2day.net/api/get_posts/' + id + '.json?callback=?', {});
 naver_news 등의 아이디를 찾아야 합니다. [http://me2day.net/me2/people/celebrity/all](http://me2day.net/me2/people/celebrity/all) 공식 사이트에서 아이디를 확인해서 검색해보세요!
 (흐흐허허어헐헝.... 트위터.... OTL)
 
+## Backbone.js reset 이벤트 변경
+Backbone.js에서 `collection.fetch()` 시에 발생하는 reset 이벤트가 `collection.fetch({ reset: true })`해야 작동하게 바뀌었습니다.
+
 ## Angular.js 변경
 Angular.js가 1.2.X 버전으로 올라가면서 Router 관련 모듈이 분리되었습니다. 'ㅁ'
 사용하실 때에 다음과 같이 별도의 파일을 추가하셔야 합니다! (2013년 12월 11일 업데이트)
