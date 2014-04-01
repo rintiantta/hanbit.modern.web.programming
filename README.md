@@ -54,6 +54,10 @@ Angular.js가 1.2.X 버전으로 올라가면서 Router 관련 모듈이 분리�
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular-route.js"></script>
 ```
+추가로 모듈을 생성할 때에 다음과 같이 코드를 작성해야 합니다.
+```javascript
+var basic = angular.module('basic', ['ngRoute'], function ($routeProvider) {});
+```
 
 #참고 사항
 ## Ajax
@@ -128,6 +132,8 @@ worker.postMessage(100);
 코드 10-4 웹 오디오 - CreateBufferSource() 메서드
 ```
 
+###332페이지(1쇄) - 진저티님 발견
+Backbone.js 1.X 버전부터 `books.fetch()`를 `books.fetch({ reset: true })`로 해야 reset 이벤트가 발생합니다.
 
 ###610페이지(1쇄) - 큐님 발견
 ```
