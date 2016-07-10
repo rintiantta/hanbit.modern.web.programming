@@ -137,11 +137,11 @@ app.get('/todos/:id', function (request, response) {
                 // Status Code 500(내부 서버 오류)
                 response.send(500);
             } else if (result) {
-                // Status Code 404(찾을 수 없음)
-                response.send(204);
-            } else {
                 // Status Code 200(성공)
                 response.send(result);
+            } else {
+                // Status Code 404(찾을 수 없음)
+                response.send(404);
             }
         });
     } else {
